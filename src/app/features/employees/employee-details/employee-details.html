@@ -1,0 +1,152 @@
+<div class="details-page">
+  <!-- Page Header -->
+
+  <div class="page-header">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div class="title-area">
+      <h1>Employee Details</h1>
+
+      <p>View employee information</p>
+    </div>
+  </div>
+
+  <!-- Profile Card -->
+
+  @if (employee; as loadedEmployee) {
+  <div class="profile-card">
+    <div class="profile-header">
+      <img [src]="loadedEmployee.avatar" [alt]="loadedEmployee.name" class="avatar" />
+
+      <div class="profile-info">
+        <h2>
+          {{ loadedEmployee.name }}
+        </h2>
+
+        <p>
+          {{ loadedEmployee.position }}
+        </p>
+
+        <span
+          class="status"
+          [class.active]="loadedEmployee.status === 'Active'"
+          [class.leave]="loadedEmployee.status === 'On Leave'"
+          [class.inactive]="loadedEmployee.status === 'Inactive'"
+        >
+          {{ loadedEmployee.status }}
+        </span>
+      </div>
+
+      <button mat-flat-button class="edit-button" (click)="editEmployee()">
+        <mat-icon>edit</mat-icon>
+
+        Edit Employee
+      </button>
+    </div>
+
+    <!-- Information -->
+
+    <div class="information-section">
+      <h3>Personal Information</h3>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label"> Full Name </span>
+
+          <strong>
+            {{ loadedEmployee.name }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span class="label"> Email </span>
+
+          <strong>
+            {{ loadedEmployee.email }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span class="label"> Department </span>
+
+          <strong>
+            {{ loadedEmployee.department }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span class="label"> Position </span>
+
+          <strong>
+            {{ loadedEmployee.position }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span class="label"> Join Date </span>
+
+          <strong>
+            {{ loadedEmployee.joinDate | date: 'dd MMM yyyy' }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span class="label"> Employee ID </span>
+
+          <strong> EMP-{{ loadedEmployee.id.toString().padStart(4, '0') }} </strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+
+    <div class="information-section">
+      <h3>Employee Overview</h3>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <mat-icon>calendar_month</mat-icon>
+
+          <div>
+            <span>Joined</span>
+
+            <strong>
+              {{ loadedEmployee.joinDate | date: 'MMM yyyy' }}
+            </strong>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <mat-icon>business</mat-icon>
+
+          <div>
+            <span>Department</span>
+
+            <strong>
+              {{ loadedEmployee.department }}
+            </strong>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <mat-icon>badge</mat-icon>
+
+          <div>
+            <span>Position</span>
+
+            <strong>
+              {{ loadedEmployee.position }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @else if (loading) {
+    <div class="loading-state">Loading employee...</div>
+  } @else if (errorMessage) {
+    <div class="error-state">{{ errorMessage }}</div>
+  }
+</div>

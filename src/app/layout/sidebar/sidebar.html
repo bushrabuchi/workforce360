@@ -1,0 +1,50 @@
+<aside class="sidebar">
+  <!-- Logo / Brand -->
+  <div class="brand">
+    <a routerLink="/" class="brand-link">
+      <img src="/assets/images/logo.png" alt="WorkForce360 Logo" class="brand-image" />
+
+      <span class="brand-text"> WorkForce360 </span>
+    </a>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      @for (item of navItems; track item.link) {
+        <li class="nav-item">
+          <a
+            [routerLink]="item.link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+            class="nav-link"
+          >
+            <span class="nav-icon material-icons">
+              {{ item.icon }}
+            </span>
+
+            <span class="nav-label">
+              {{ item.label }}
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+  <div class="sidebar-bottom">
+    <button class="language-button">
+      <span class="material-symbols-outlined"> language </span>
+
+      <span>English</span>
+
+      <span class="material-symbols-outlined arrow"> chevron_right </span>
+    </button>
+
+    <div class="user-profile">
+      <div class="avatar">B</div>
+
+      <div class="user-details">
+        <strong>Bushra</strong>
+        <span>Frontend Developer</span>
+      </div>
+    </div>
+  </div>
+</aside>

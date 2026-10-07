@@ -3,6 +3,7 @@ import { DashboardComponent } from './features/dashboard/dashboard';
 import { EmployeesComponent } from './features/employees/employees';
 import { EmployeeFormComponent } from './features/employees/employee-form/employee-form';
 import { EmployeeDetailsComponent } from './features/employees/employee-details/employee-details';
+import { DepartmentsComponent } from './features/departments/departments';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
   {
     path: 'employees/:id',
     component: EmployeeDetailsComponent,
+  },
+  {
+    path: 'departments',
+    component: DepartmentsComponent,
   },
 
   {

@@ -1,0 +1,279 @@
+<div class="departments-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>Departments</h1>
+      <p>Manage your organization's departments and teams.</p>
+    </div>
+
+    <button mat-flat-button class="primary-button" (click)="openAddForm()">
+      <span class="material-symbols-outlined">add</span>
+      Add Department
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-icon blue">
+        <span class="material-symbols-outlined"> apartment </span>
+      </div>
+
+      <div>
+        <span class="summary-label"> Total Departments </span>
+
+        <strong>
+          {{ totalDepartments() }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon green">
+        <span class="material-symbols-outlined"> check_circle </span>
+      </div>
+
+      <div>
+        <span class="summary-label"> Active Departments </span>
+
+        <strong>
+          {{ activeDepartments() }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon purple">
+        <span class="material-symbols-outlined"> groups </span>
+      </div>
+
+      <div>
+        <span class="summary-label"> Total Employees </span>
+
+        <strong>
+          {{ totalEmployees() }}
+        </strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Department Card -->
+  <div class="content-card">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="material-symbols-outlined"> search </span>
+
+        <input
+          type="text"
+          placeholder="Search departments..."
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)"
+        />
+
+        @if (searchTerm()) {
+          <button class="clear-button" (click)="clearSearch()">
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+        }
+      </div>
+
+      <div class="filter-box">
+        <span class="material-symbols-outlined"> filter_list </span>
+
+        <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
+          <option value="All">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Department</th>
+            <th>Manager</th>
+            <th>Employees</th>
+            <th>Status</th>
+            <th class="actions-column">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (department of filteredDepartments(); track department.id) {
+            <tr>
+              <!-- Department -->
+              <td>
+                <div class="department-info">
+                  <div class="department-icon purple">
+                    <span class="material-symbols-outlined"> apartment </span>
+                  </div>
+
+                  <div>
+                    <strong>
+                      {{ department.name }}
+                    </strong>
+
+                    <span>
+                      {{ department.description }}
+                    </span>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Manager -->
+              <td>
+                <div class="manager">
+                  <div class="avatar">
+                    {{ department.manager.charAt(0) }}
+                  </div>
+
+                  <span>
+                    {{ department.manager }}
+                  </span>
+                </div>
+              </td>
+
+              <!-- Employee count -->
+              <td>
+                <span class="employee-count">
+                  {{ department.employeeCount }}
+                </span>
+              </td>
+
+              <!-- Status -->
+              <td>
+                <span
+                  class="status"
+                  [class.active]="department.status === 'Active'"
+                  [class.inactive]="department.status === 'Inactive'"
+                >
+                  <span class="status-dot"></span>
+
+                  {{ department.status }}
+                </span>
+              </td>
+
+              <!-- Actions -->
+              <td>
+                <div class="actions">
+                  <button class="icon-button" title="Edit" (click)="openEditForm(department)">
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+
+                  <button
+                    class="icon-button delete"
+                    title="Delete"
+                    (click)="deleteDepartment(department)"
+                  >
+                    <span class="material-symbols-outlined"> delete </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+
+          <!-- Empty state -->
+          @if (filteredDepartments().length === 0) {
+            <tr>
+              <td colspan="5">
+                <div class="empty-state">
+                  <span class="material-symbols-outlined"> search_off </span>
+
+                  <h3>No departments found</h3>
+
+                  <p>Try changing your search or filter.</p>
+
+                  <button class="secondary-button" (click)="clearSearch()">Clear Filters</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="closeForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <div>
+            <h2>
+              {{ editingDepartment() ? 'Edit Department' : 'Add Department' }}
+            </h2>
+
+            <p>
+              {{
+                editingDepartment() ? 'Update department information.' : 'Create a new department.'
+              }}
+            </p>
+          </div>
+
+          <button class="close-modal" (click)="closeForm()">
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+        </div>
+
+        <div class="form-body">
+          <!-- Department Name -->
+          <div class="form-group">
+            <label>
+              Department Name
+              <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              placeholder="e.g. Information Technology"
+              [(ngModel)]="departmentName"
+            />
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label> Description </label>
+
+            <textarea rows="3" placeholder="Describe the department..." [(ngModel)]="description">
+            </textarea>
+          </div>
+
+          <!-- Manager -->
+          <div class="form-group">
+            <label> Department Manager </label>
+
+            <input type="text" placeholder="Enter manager name" [(ngModel)]="manager" />
+          </div>
+
+          <!-- Status -->
+          <div class="form-group">
+            <label> Status </label>
+
+            <select [(ngModel)]="status">
+              <option value="Active">Active</option>
+
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="secondary-button" (click)="closeForm()">Cancel</button>
+
+          <button
+            mat-flat-button
+            class="primary-button"
+            [disabled]="!departmentName.trim()"
+            (click)="saveDepartment()"
+          >
+            {{ editingDepartment() ? 'Save Changes' : 'Add Department' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

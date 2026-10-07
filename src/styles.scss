@@ -58,3 +58,69 @@ body {
   outline: 3px solid rgba(111, 93, 231, 0.45);
   outline-offset: 2px;
 }
+.search-box {
+  width: min(380px, 55%);
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid var(--wf-line);
+  border-radius: 12px;
+  background: #f7f8fc;
+  color: #7b879d;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.search-box:focus-within {
+  border-color: rgba(111, 93, 231, 0.55);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(111, 93, 231, 0.1);
+}
+
+.search-box .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--wf-ink);
+  font: inherit;
+  font-size: 13px;
+}
+
+.search-box input::placeholder {
+  color: #8994a9;
+}
+
+button[mat-flat-button] {
+  --mdc-filled-button-container-color: var(--wf-accent);
+  --mdc-filled-button-label-text-color: #fff;
+
+  border-radius: 11px;
+  box-shadow: 0 7px 16px rgba(111, 93, 231, 0.2);
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+button[mat-flat-button]:hover:not(:disabled) {
+  --mdc-filled-button-container-color: #5d4bd3;
+
+  box-shadow: 0 9px 20px rgba(93, 75, 211, 0.28);
+}
+
+button[mat-flat-button]:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button[mat-flat-button]:disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.55;
+}

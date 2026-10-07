@@ -5,7 +5,7 @@ html {
   @include mat.theme(
     (
       color: (
-        primary: mat.$magenta-palette,
+        primary: mat.$violet-palette,
         tertiary: mat.$violet-palette,
       ),
       typography: Roboto,
@@ -14,21 +14,47 @@ html {
   );
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
+:root {
+  --wf-ink: #17233b;
+  --wf-muted: #68758d;
+  --wf-line: #e3e9f2;
+  --wf-accent: #6f5de7;
+  --wf-canvas: #f5f7fb;
+  --wf-surface: #ffffff;
+  --wf-soft-accent: #f0edff;
+
   color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  min-height: 100%;
+  font-family:
+    Roboto,
+    'Segoe UI',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
-/* You can add global styles to this file, and also import other style files */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--wf-canvas);
+  color: var(--wf-ink);
+  font: var(--mat-sys-body-medium);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(111, 93, 231, 0.18);
+  color: var(--wf-ink);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(111, 93, 231, 0.45);
+  outline-offset: 2px;
+}

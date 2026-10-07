@@ -1,18 +1,30 @@
 .app-shell {
   min-height: 100vh;
   display: flex;
-  background: #f5f7fb;
+  background:
+    radial-gradient(ellipse at 78% 0, rgba(111, 93, 231, 0.045), transparent 32%),
+    var(--wf-canvas);
 }
 
 .main-area {
   flex: 1;
   min-width: 0;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .page-content {
   flex: 1;
-  padding: 28px;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 34px);
   overflow-x: hidden;
+}
+
+@media (max-width: 700px) {
+  .page-content {
+    padding: 20px 16px;
+  }
 }

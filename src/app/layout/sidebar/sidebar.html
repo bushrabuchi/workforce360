@@ -1,13 +1,16 @@
 <aside class="sidebar">
-  <!-- Logo / Brand -->
   <div class="brand">
     <a routerLink="/" class="brand-link">
       <img src="/assets/images/logo.png" alt="WorkForce360 Logo" class="brand-image" />
 
-      <span class="brand-text"> WorkForce360 </span>
+      <span class="brand-text">
+        <span class="brand-name">WorkForce360</span>
+        <span class="brand-subtitle">HR Workspace</span>
+      </span>
     </a>
   </div>
-  <nav class="sidebar-nav">
+
+  <nav class="sidebar-nav" aria-label="Main navigation">
     <ul class="nav">
       @for (item of navItems; track item.link) {
         <li class="nav-item">
@@ -21,21 +24,18 @@
               {{ item.icon }}
             </span>
 
-            <span class="nav-label">
-              {{ item.label }}
-            </span>
+            <span class="nav-label">{{ item.label }}</span>
           </a>
         </li>
       }
     </ul>
   </nav>
+
   <div class="sidebar-bottom">
-    <button class="language-button">
-      <span class="material-symbols-outlined"> language </span>
-
+    <button class="language-button" type="button">
+      <span class="material-symbols-outlined">language</span>
       <span>English</span>
-
-      <span class="material-symbols-outlined arrow"> chevron_right </span>
+      <span class="material-symbols-outlined arrow">chevron_right</span>
     </button>
 
     <div class="user-profile">

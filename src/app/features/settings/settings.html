@@ -1,0 +1,445 @@
+<div class="settings-page">
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <h1>Settings</h1>
+      <p>Manage your account, preferences and application settings.</p>
+    </div>
+
+    <div class="header-user">
+      <div class="user-avatar">
+        {{ user.name.charAt(0) }}
+      </div>
+
+      <div>
+        <strong>{{ user.name }}</strong>
+        <span>{{ user.role }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS LAYOUT -->
+
+  <div class="settings-layout">
+    <!-- LEFT NAVIGATION -->
+
+    <aside class="settings-sidebar">
+      <button [class.active]="activeSection() === 'profile'" (click)="setSection('profile')">
+        <span class="material-symbols-outlined"> person </span>
+
+        <span>Profile</span>
+      </button>
+
+      <button [class.active]="activeSection() === 'general'" (click)="setSection('general')">
+        <span class="material-symbols-outlined"> tune </span>
+
+        <span>General</span>
+      </button>
+
+      <button
+        [class.active]="activeSection() === 'notifications'"
+        (click)="setSection('notifications')"
+      >
+        <span class="material-symbols-outlined"> notifications </span>
+
+        <span>Notifications</span>
+      </button>
+
+      <button [class.active]="activeSection() === 'appearance'" (click)="setSection('appearance')">
+        <span class="material-symbols-outlined"> palette </span>
+
+        <span>Appearance</span>
+      </button>
+
+      <button [class.active]="activeSection() === 'security'" (click)="setSection('security')">
+        <span class="material-symbols-outlined"> security </span>
+
+        <span>Security</span>
+      </button>
+
+      <button [class.active]="activeSection() === 'account'" (click)="setSection('account')">
+        <span class="material-symbols-outlined"> manage_accounts </span>
+
+        <span>Account</span>
+      </button>
+    </aside>
+
+    <!-- CONTENT -->
+
+    <main class="settings-content">
+      <!-- ================= PROFILE ================= -->
+
+      @if (activeSection() === 'profile') {
+        <section class="settings-card">
+          <div class="section-title">
+            <div>
+              <h2>Profile Information</h2>
+
+              <p>Manage your personal and professional information.</p>
+            </div>
+
+            <span class="material-symbols-outlined section-icon"> person </span>
+          </div>
+
+          <div class="profile-banner">
+            <div class="large-avatar">
+              {{ user.name.charAt(0) }}
+            </div>
+
+            <div>
+              <h3>{{ user.name }}</h3>
+
+              <p>{{ user.jobTitle }}</p>
+
+              <span class="status-badge">
+                {{ user.status }}
+              </span>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name</label>
+
+              <input type="text" [(ngModel)]="user.name" />
+            </div>
+
+            <div class="form-group">
+              <label>Job Title</label>
+
+              <input type="text" [(ngModel)]="user.jobTitle" />
+            </div>
+
+            <div class="form-group">
+              <label>Email Address</label>
+
+              <input type="email" [(ngModel)]="user.email" />
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+
+              <input type="text" [(ngModel)]="user.phone" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-btn" (click)="saveSettings()">
+              <span class="material-symbols-outlined"> save </span>
+
+              Save Profile
+            </button>
+          </div>
+        </section>
+      }
+
+      <!-- ================= GENERAL ================= -->
+
+      @if (activeSection() === 'general') {
+        <section class="settings-card">
+          <div class="section-title">
+            <div>
+              <h2>General Settings</h2>
+
+              <p>Configure your language, timezone and date preferences.</p>
+            </div>
+
+            <span class="material-symbols-outlined section-icon"> tune </span>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Language</label>
+
+              <select [(ngModel)]="language">
+                <option value="English">English</option>
+
+                <option value="Arabic">Arabic</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Timezone</label>
+
+              <select [(ngModel)]="timezone">
+                <option value="Asia/Riyadh">Riyadh (GMT+3)</option>
+
+                <option value="Asia/Dubai">Dubai (GMT+4)</option>
+
+                <option value="Asia/Kolkata">India (GMT+5:30)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Date Format</label>
+
+              <select [(ngModel)]="dateFormat">
+                <option value="DD MMM YYYY">08 Oct 2026</option>
+
+                <option value="MM/DD/YYYY">10/08/2026</option>
+
+                <option value="YYYY-MM-DD">2026-10-08</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-btn" (click)="saveSettings()">
+              <span class="material-symbols-outlined"> save </span>
+
+              Save Preferences
+            </button>
+          </div>
+        </section>
+      }
+
+      <!-- ================= NOTIFICATIONS ================= -->
+
+      @if (activeSection() === 'notifications') {
+        <section class="settings-card">
+          <div class="section-title">
+            <div>
+              <h2>Notifications</h2>
+
+              <p>Choose which notifications you want to receive.</p>
+            </div>
+
+            <span class="material-symbols-outlined section-icon"> notifications </span>
+          </div>
+
+          <div class="notification-list">
+            <div class="notification-row">
+              <div>
+                <strong>Email Notifications</strong>
+
+                <p>Receive important system updates by email.</p>
+              </div>
+
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="emailNotifications" />
+
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="notification-row">
+              <div>
+                <strong>Attendance Notifications</strong>
+
+                <p>Get notified about attendance changes.</p>
+              </div>
+
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="attendanceNotifications" />
+
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="notification-row">
+              <div>
+                <strong>Employee Notifications</strong>
+
+                <p>Receive updates about employee activity.</p>
+              </div>
+
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="employeeNotifications" />
+
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="notification-row">
+              <div>
+                <strong>Weekly Reports</strong>
+
+                <p>Receive a weekly HR summary report.</p>
+              </div>
+
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="weeklyReports" />
+
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-btn" (click)="saveSettings()">
+              <span class="material-symbols-outlined"> save </span>
+
+              Save Notifications
+            </button>
+          </div>
+        </section>
+      }
+
+      <!-- ================= APPEARANCE ================= -->
+
+      @if (activeSection() === 'appearance') {
+        <section class="settings-card">
+          <div class="section-title">
+            <div>
+              <h2>Appearance</h2>
+
+              <p>Customize how Workforce360 looks.</p>
+            </div>
+
+            <span class="material-symbols-outlined section-icon"> palette </span>
+          </div>
+
+          <div class="theme-option">
+            <div class="theme-icon">
+              <span class="material-symbols-outlined">
+                {{ darkMode ? 'dark_mode' : 'light_mode' }}
+              </span>
+            </div>
+
+            <div class="theme-info">
+              <strong>
+                {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
+              </strong>
+
+              <p>
+                {{ darkMode ? 'Use a darker interface.' : 'Use the standard light interface.' }}
+              </p>
+            </div>
+
+            <label class="switch">
+              <input type="checkbox" [checked]="darkMode" (change)="toggleDarkMode()" />
+
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="theme-preview">
+            <div class="preview-sidebar"></div>
+
+            <div class="preview-content">
+              <div class="preview-header"></div>
+
+              <div class="preview-cards">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </section>
+      }
+
+      <!-- ================= SECURITY ================= -->
+
+      @if (activeSection() === 'security') {
+        <section class="settings-card">
+          <div class="section-title">
+            <div>
+              <h2>Security</h2>
+
+              <p>Manage your account security.</p>
+            </div>
+
+            <span class="material-symbols-outlined section-icon"> security </span>
+          </div>
+
+          <div class="security-row">
+            <div>
+              <strong>Password</strong>
+
+              <p>Keep your password secure and up to date.</p>
+            </div>
+
+            <button class="secondary-btn" (click)="changePassword()">Change Password</button>
+          </div>
+
+          <div class="security-row">
+            <div>
+              <strong>Two-Factor Authentication</strong>
+
+              <p>Add an additional layer of security.</p>
+            </div>
+
+            <div class="security-control">
+              <span [class.enabled]="twoFactorEnabled">
+                {{ twoFactorEnabled ? 'Enabled' : 'Disabled' }}
+              </span>
+
+              <button class="secondary-btn" (click)="toggleTwoFactor()">
+                {{ twoFactorEnabled ? 'Disable' : 'Enable' }}
+              </button>
+            </div>
+          </div>
+        </section>
+      }
+
+      <!-- ================= ACCOUNT ================= -->
+
+      @if (activeSection() === 'account') {
+        <section class="settings-card">
+          <div class="section-title">
+            <div>
+              <h2>Account</h2>
+
+              <p>View your account and login information.</p>
+            </div>
+
+            <span class="material-symbols-outlined section-icon"> manage_accounts </span>
+          </div>
+
+          <div class="account-info">
+            <div class="account-row">
+              <span>Account Name</span>
+
+              <strong>{{ user.name }}</strong>
+            </div>
+
+            <div class="account-row">
+              <span>Email</span>
+
+              <strong>{{ user.email }}</strong>
+            </div>
+
+            <div class="account-row">
+              <span>Role</span>
+
+              <strong>{{ user.role }}</strong>
+            </div>
+
+            <div class="account-row">
+              <span>Status</span>
+
+              <span class="status-badge">
+                {{ user.status }}
+              </span>
+            </div>
+
+            <div class="account-row">
+              <span>Last Login</span>
+
+              <strong>{{ user.lastLogin }}</strong>
+            </div>
+          </div>
+
+          <div class="account-actions">
+            <button class="danger-btn" (click)="signOut()">
+              <span class="material-symbols-outlined"> logout </span>
+
+              Sign Out
+            </button>
+          </div>
+        </section>
+      }
+
+      <!-- SAVED MESSAGE -->
+
+      @if (savedMessage()) {
+        <div class="saved-message">
+          <span class="material-symbols-outlined"> check_circle </span>
+
+          Settings saved successfully.
+        </div>
+      }
+    </main>
+  </div>
+</div>

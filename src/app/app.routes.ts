@@ -4,7 +4,8 @@ import { EmployeesComponent } from './features/employees/employees';
 import { EmployeeFormComponent } from './features/employees/employee-form/employee-form';
 import { EmployeeDetailsComponent } from './features/employees/employee-details/employee-details';
 import { DepartmentsComponent } from './features/departments/departments';
-
+import { AttendanceComponent } from './features/attendance/attendance';
+import { SettingsComponent } from './features/settings/settings';
 export const routes: Routes = [
   {
     path: '',
@@ -31,7 +32,14 @@ export const routes: Routes = [
     path: 'departments',
     component: DepartmentsComponent,
   },
-
+  {
+    path: 'attendance',
+    component: AttendanceComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+  },
   {
     path: '**',
     redirectTo: '',

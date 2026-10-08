@@ -1,14 +1,3 @@
-.departments-page {
-  max-width: 1600px;
-  margin: 0 auto;
-  --ink: var(--wf-ink);
-  --muted: var(--wf-muted);
-  --line: var(--wf-line);
-  padding: 4px;
-}
-
-/* Buttons */
-
 .primary-button,
 .secondary-button {
   height: 42px;
@@ -37,7 +26,7 @@
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
   margin-bottom: 22px;
 }
@@ -51,6 +40,11 @@
   align-items: center;
   gap: 15px;
   color: var(--wf-ink);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  &:hover {
+    box-shadow: 0 4px 18px rgba(28, 42, 72, 0.05);
+    transform: translateY(-1px);
+  }
 }
 
 .summary-icon {
@@ -72,9 +66,14 @@
   color: #16a34a;
 }
 
-.summary-icon.purple {
-  background: #f3edff;
-  color: #7c3aed;
+.summary-icon.red {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.summary-icon.orange {
+  background: #fff7ed;
+  color: #ea580c;
 }
 
 .summary-label {
@@ -96,17 +95,68 @@
   border: 1px solid #e8ebf0;
   border-radius: 14px;
   overflow: hidden;
+  display: flex;
+  padding: 18px 20px;
+  justify-content: space-between;
 }
-
-/* Toolbar */
 
 .toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  padding: 18px 20px;
   border-bottom: 1px solid #edf0f4;
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 10px;
+  padding-top: 5px;
+}
+
+.date-box,
+.filter-box {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #dfe3e9;
+  border-radius: 9px;
+  padding: 0 12px;
+  background: white;
+}
+
+.search-box {
+  width: 330px;
+}
+
+.search-box:focus-within,
+.date-box:focus-within,
+.filter-box:focus-within {
+  border-color: #2563eb;
+}
+
+.search-box > span,
+.date-box > span,
+.filter-box > span {
+  color: #98a2b3;
+  font-size: 20px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.date-box input,
+.filter-box select {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #344054;
+  font-size: 14px;
 }
 
 .clear-button {
@@ -115,29 +165,6 @@
   cursor: pointer;
   color: #98a2b3;
   display: flex;
-}
-
-.filter-box {
-  height: 42px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #dfe3e9;
-  border-radius: 9px;
-  padding: 0 12px;
-  color: #667085;
-  width: auto;
-}
-
-.filter-box select {
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #344054;
-  font-size: 14px;
-  cursor: pointer;
-
-  width: 100%;
 }
 
 /* Table */
@@ -150,6 +177,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 900px;
 }
 
 thead {
@@ -168,7 +196,7 @@ th {
 }
 
 td {
-  padding: 17px 20px;
+  padding: 16px 20px;
   border-top: 1px solid #edf0f4;
   color: #344054;
   font-size: 14px;
@@ -178,64 +206,46 @@ tbody tr:hover {
   background: #fafbfc;
 }
 
-/* Department */
+/* Employee */
 
-.department-info {
+.employee-info {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 11px;
 }
 
-.department-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: #f3edff;
-  color: #7c3aed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.department-info strong {
+.employee-info strong {
   display: block;
   color: #182230;
-  font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
-.department-info span {
-  display: block;
+.employee-info span {
   color: #98a2b3;
   font-size: 12px;
 }
 
-/* Manager */
-
-.manager {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #e8eefc;
-  color: #7c3aed;
+  color: #2563eb;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
   font-weight: 700;
 }
 
-/* Employee count */
+/* Time */
 
-.employee-count {
-  font-weight: 600;
+.time {
+  font-weight: 500;
   color: #344054;
+}
+
+.not-available {
+  color: #b0b7c3;
 }
 
 /* Status */
@@ -250,14 +260,19 @@ tbody tr:hover {
   font-weight: 600;
 }
 
-.status.active {
+.status.present {
   background: #ecfdf3;
   color: #15803d;
 }
 
-.status.inactive {
-  background: #f2f4f7;
-  color: #667085;
+.status.absent {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.status.leave {
+  background: #fff7ed;
+  color: #c2410c;
 }
 
 .status-dot {
@@ -339,7 +354,7 @@ tbody tr:hover {
 
 .modal {
   width: 100%;
-  max-width: 520px;
+  max-width: 600px;
   background: white;
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
@@ -385,6 +400,12 @@ tbody tr:hover {
   padding: 22px 24px;
 }
 
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
 .form-group {
   margin-bottom: 18px;
 }
@@ -406,13 +427,13 @@ tbody tr:hover {
 }
 
 .form-group input,
-.form-group textarea,
 .form-group select {
   width: 100%;
   box-sizing: border-box;
+  height: 42px;
   border: 1px solid #dfe3e9;
   border-radius: 8px;
-  padding: 11px 12px;
+  padding: 0 12px;
   font-family: inherit;
   font-size: 14px;
   color: #344054;
@@ -421,14 +442,9 @@ tbody tr:hover {
 }
 
 .form-group input:focus,
-.form-group textarea:focus,
 .form-group select:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
-}
-
-.form-group textarea {
-  resize: vertical;
 }
 
 /* Modal Footer */
@@ -443,13 +459,28 @@ tbody tr:hover {
 
 /* Responsive */
 
-@media (max-width: 900px) {
-  .departments-page {
-    padding: 22px 18px;
+@media (max-width: 1100px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .summary-grid {
-    grid-template-columns: 1fr;
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-box {
+    width: auto;
+  }
+
+  .toolbar-right {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 700px) {
+  .attendance-page {
+    padding: 18px 12px;
   }
 
   .page-header {
@@ -458,31 +489,16 @@ tbody tr:hover {
     gap: 18px;
   }
 
-  .toolbar {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-right {
     flex-direction: column;
-    align-items: stretch;
   }
 
-  .search-box {
-    width: auto;
-  }
-}
-
-@media (max-width: 600px) {
-  .departments-page {
-    padding: 18px 12px;
-  }
-
-  .page-header h1 {
-    font-size: 24px;
-  }
-
-  .primary-button {
-    width: 100%;
-  }
-
-  .filter-box {
-    width: 100%;
-    box-sizing: border-box;
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }

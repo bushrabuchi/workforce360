@@ -1,0 +1,397 @@
+<div class="reports-page">
+  <!-- ================= HEADER ================= -->
+
+  <div class="page-header">
+    <div>
+      <div class="breadcrumb">{{ 'Workforce360' | translate }} / {{ 'Reports' | translate }}</div>
+
+      <h1>{{ 'Reports' | translate }}</h1>
+
+      <p>{{ 'Analyze employee, department and attendance performance.' | translate }}</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="secondary-btn" (click)="printReport()">
+        <span class="material-symbols-outlined"> print </span>
+
+        {{ 'Print' | translate }}
+      </button>
+
+      <button class="primary-btn" (click)="exportCSV()">
+        <span class="material-symbols-outlined"> download </span>
+
+        {{ 'Export CSV' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= FILTERS ================= -->
+
+  <section class="filter-card">
+    <div class="filter-group">
+      <label>{{ 'Start Date' | translate }}</label>
+
+      <input type="date" [ngModel]="startDate()" (ngModelChange)="startDate.set($event)" />
+    </div>
+
+    <div class="filter-group">
+      <label>{{ 'End Date' | translate }}</label>
+
+      <input type="date" [ngModel]="endDate()" (ngModelChange)="endDate.set($event)" />
+    </div>
+
+    <div class="filter-group">
+      <label>{{ 'Department' | translate }}</label>
+
+      <select [ngModel]="selectedDepartment()" (ngModelChange)="selectedDepartment.set($event)">
+        @for (department of departmentNames(); track department) {
+          <option [value]="department">
+            {{ department | translate }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <button class="filter-btn" (click)="applyFilters()">
+      <span class="material-symbols-outlined"> filter_alt </span>
+
+      {{ 'Apply Filters' | translate }}
+    </button>
+  </section>
+
+  <!-- ================= SUMMARY ================= -->
+
+  <section class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-icon blue">
+        <span class="material-symbols-outlined"> groups </span>
+      </div>
+
+      <div>
+        <span>{{ 'Total Employees' | translate }}</span>
+
+        <strong>
+          {{ totalEmployees() }}
+        </strong>
+
+        <small>{{ 'Active employees' | translate }}</small>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon green">
+        <span class="material-symbols-outlined"> how_to_reg </span>
+      </div>
+
+      <div>
+        <span>{{ 'Present' | translate }}</span>
+
+        <strong>
+          {{ totalPresent() }}
+        </strong>
+
+        <small>{{ 'Attendance records' | translate }}</small>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon red">
+        <span class="material-symbols-outlined"> person_off </span>
+      </div>
+
+      <div>
+        <span>{{ 'Absent' | translate }}</span>
+
+        <strong>
+          {{ totalAbsent() }}
+        </strong>
+
+        <small>{{ 'Attendance records' | translate }}</small>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon orange">
+        <span class="material-symbols-outlined"> event_busy </span>
+      </div>
+
+      <div>
+        <span>{{ 'On Leave' | translate }}</span>
+
+        <strong>
+          {{ totalLeave() }}
+        </strong>
+
+        <small>{{ 'Leave records' | translate }}</small>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon purple">
+        <span class="material-symbols-outlined"> analytics </span>
+      </div>
+
+      <div>
+        <span>{{ 'Attendance Rate' | translate }}</span>
+
+        <strong> {{ attendanceRate() }}% </strong>
+
+        <small>{{ 'Overall performance' | translate }}</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHART ROW ================= -->
+
+  <section class="charts-grid">
+    <!-- ATTENDANCE -->
+
+    <div class="report-card">
+      <div class="card-header">
+        <div>
+          <h2>{{ 'Attendance Overview' | translate }}</h2>
+
+          <p>{{ 'Attendance distribution for selected period.' | translate }}</p>
+        </div>
+
+        <span class="material-symbols-outlined"> donut_large </span>
+      </div>
+
+      <div class="attendance-chart">
+        <div class="donut">
+          <div class="donut-center">
+            <strong> {{ attendanceRate() }}% </strong>
+
+            <span>{{ 'Present' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="attendance-legend">
+          <div class="legend-item">
+            <span class="legend-dot present"></span>
+
+            <div>
+              <strong>{{ 'Present' | translate }}</strong>
+              <span>{{ totalPresent() }}</span>
+            </div>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-dot absent"></span>
+
+            <div>
+              <strong>{{ 'Absent' | translate }}</strong>
+              <span>{{ totalAbsent() }}</span>
+            </div>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-dot leave"></span>
+
+            <div>
+              <strong>{{ 'Leave' | translate }}</strong>
+              <span>{{ totalLeave() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEPARTMENTS -->
+
+    <div class="report-card">
+      <div class="card-header">
+        <div>
+          <h2>{{ 'Department Statistics' | translate }}</h2>
+
+          <p>{{ 'Employees by department.' | translate }}</p>
+        </div>
+
+        <span class="material-symbols-outlined"> apartment </span>
+      </div>
+
+      <div class="department-chart">
+        @for (department of departments(); track department.name) {
+          <div class="department-row">
+            <div class="department-label">
+              <span>
+                {{ department.name | translate }}
+              </span>
+
+              <strong>
+                {{ department.employees }}
+              </strong>
+            </div>
+
+            <div class="bar-background">
+              <div
+                class="bar-fill"
+                [style.width.%]="getDepartmentPercentage(department.employees)"
+              ></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ATTENDANCE PERFORMANCE ================= -->
+
+  <section class="report-card attendance-performance">
+    <div class="card-header">
+      <div>
+        <h2>{{ 'Attendance Performance' | translate }}</h2>
+
+        <p>{{ 'Current attendance breakdown.' | translate }}</p>
+      </div>
+
+      <span class="material-symbols-outlined"> monitoring </span>
+    </div>
+
+    <div class="performance-grid">
+      <div class="performance-item">
+        <div class="performance-header">
+          <span>{{ 'Present' | translate }}</span>
+
+          <strong>
+            {{ totalPresent() }}
+          </strong>
+        </div>
+
+        <div class="progress">
+          <div
+            class="progress-fill present-fill"
+            [style.width.%]="getAttendancePercentage(totalPresent())"
+          ></div>
+        </div>
+      </div>
+
+      <div class="performance-item">
+        <div class="performance-header">
+          <span>{{ 'Absent' | translate }}</span>
+
+          <strong>
+            {{ totalAbsent() }}
+          </strong>
+        </div>
+
+        <div class="progress">
+          <div
+            class="progress-fill absent-fill"
+            [style.width.%]="getAttendancePercentage(totalAbsent())"
+          ></div>
+        </div>
+      </div>
+
+      <div class="performance-item">
+        <div class="performance-header">
+          <span>{{ 'Leave' | translate }}</span>
+
+          <strong>
+            {{ totalLeave() }}
+          </strong>
+        </div>
+
+        <div class="progress">
+          <div
+            class="progress-fill leave-fill"
+            [style.width.%]="getAttendancePercentage(totalLeave())"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EMPLOYEE REPORT ================= -->
+
+  <section class="report-card employee-report">
+    <div class="card-header">
+      <div>
+        <h2>{{ 'Employee Attendance Report' | translate }}</h2>
+
+        <p>{{ 'Individual employee attendance statistics.' | translate }}</p>
+      </div>
+
+      <span class="material-symbols-outlined"> table_chart </span>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>{{ 'Employee' | translate }}</th>
+            <th>{{ 'Department' | translate }}</th>
+            <th>{{ 'Present' | translate }}</th>
+            <th>{{ 'Absent' | translate }}</th>
+            <th>{{ 'Leave' | translate }}</th>
+            <th>{{ 'Attendance Rate' | translate }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (employee of filteredEmployees(); track employee.id) {
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <div class="employee-avatar">
+                    {{ employee.name.charAt(0) }}
+                  </div>
+
+                  <div>
+                    <strong>
+                      {{ employee.name }}
+                    </strong>
+
+                    <span>
+                      {{ employee.employeeId }}
+                    </span>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                {{ employee.department | translate }}
+              </td>
+
+              <td>
+                <span class="number present-number">
+                  {{ employee.present }}
+                </span>
+              </td>
+
+              <td>
+                <span class="number absent-number">
+                  {{ employee.absent }}
+                </span>
+              </td>
+
+              <td>
+                <span class="number leave-number">
+                  {{ employee.leave }}
+                </span>
+              </td>
+
+              <td>
+                <div class="rate-cell">
+                  <div class="mini-progress">
+                    <div class="mini-progress-fill" [style.width.%]="employee.attendanceRate"></div>
+                  </div>
+
+                  <strong> {{ employee.attendanceRate }}% </strong>
+                </div>
+              </td>
+            </tr>
+          }
+
+          @if (filteredEmployees().length === 0) {
+            <tr>
+              <td colspan="6" class="empty-state">
+                {{ 'No employee records found.' | translate }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

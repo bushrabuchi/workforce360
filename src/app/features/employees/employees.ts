@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Employee } from '../../models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '../../shared/translate.pipe';
 @Component({
   selector: 'app-employees',
   standalone: true,
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    TranslatePipe,
   ],
   templateUrl: './employees.html',
   styleUrl: './employees.scss',

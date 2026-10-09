@@ -3,14 +3,14 @@
 
   <div class="page-header">
     <div>
-      <h1>Employees</h1>
-      <p>Manage your organization's employees</p>
+      <h1>{{ 'Employees' | translate }}</h1>
+      <p>{{ "Manage your organization's employees" | translate }}</p>
     </div>
 
     <button mat-flat-button class="add-button" (click)="addEmployee()">
       <mat-icon>add</mat-icon>
 
-      Add Employee
+      {{ 'Add Employee' | translate }}
     </button>
   </div>
 
@@ -18,7 +18,7 @@
 
   <div class="filters-card">
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search employees</mat-label>
+      <mat-label>{{ 'Search employees' | translate }}</mat-label>
 
       <mat-icon matPrefix>search</mat-icon>
 
@@ -26,32 +26,32 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Department</mat-label>
+      <mat-label>{{ 'Department' | translate }}</mat-label>
 
       <mat-select [(ngModel)]="selectedDepartment">
-        <mat-option value="All"> All Departments </mat-option>
+        <mat-option value="All"> {{ 'All Departments' | translate }} </mat-option>
 
-        <mat-option value="Engineering"> Engineering </mat-option>
+        <mat-option value="Engineering"> {{ 'Engineering' | translate }} </mat-option>
 
-        <mat-option value="Human Resources"> Human Resources </mat-option>
+        <mat-option value="Human Resources"> {{ 'Human Resources' | translate }} </mat-option>
 
-        <mat-option value="Finance"> Finance </mat-option>
+        <mat-option value="Finance"> {{ 'Finance' | translate }} </mat-option>
 
-        <mat-option value="Marketing"> Marketing </mat-option>
+        <mat-option value="Marketing"> {{ 'Marketing' | translate }} </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Status</mat-label>
+      <mat-label>{{ 'Status' | translate }}</mat-label>
 
       <mat-select [(ngModel)]="selectedStatus">
-        <mat-option value="All"> All Status </mat-option>
+        <mat-option value="All"> {{ 'All Status' | translate }} </mat-option>
 
-        <mat-option value="Active"> Active </mat-option>
+        <mat-option value="Active"> {{ 'Active' | translate }} </mat-option>
 
-        <mat-option value="On Leave"> On Leave </mat-option>
+        <mat-option value="On Leave"> {{ 'On Leave' | translate }} </mat-option>
 
-        <mat-option value="Inactive"> Inactive </mat-option>
+        <mat-option value="Inactive"> {{ 'Inactive' | translate }} </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -62,7 +62,7 @@
     <table mat-table [dataSource]="filteredEmployees">
       <!-- Employee -->
       <ng-container matColumnDef="employee">
-        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'Employee' | translate }}</th>
 
         <td mat-cell *matCellDef="let employee">
           <div class="employee-info">
@@ -84,17 +84,17 @@
       <!-- Department -->
 
       <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef>Department</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'Department' | translate }}</th>
 
         <td mat-cell *matCellDef="let employee">
-          {{ employee.department }}
+          {{ employee.department | translate }}
         </td>
       </ng-container>
 
       <!-- Position -->
 
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>Position</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'Position' | translate }}</th>
 
         <td mat-cell *matCellDef="let employee">
           {{ employee.position }}
@@ -104,7 +104,7 @@
       <!-- Status -->
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'Status' | translate }}</th>
 
         <td mat-cell *matCellDef="let employee">
           <span
@@ -113,7 +113,7 @@
             [class.leave]="employee.status === 'On Leave'"
             [class.inactive]="employee.status === 'Inactive'"
           >
-            {{ employee.status }}
+            {{ employee.status | translate }}
           </span>
         </td>
       </ng-container>
@@ -121,7 +121,7 @@
       <!-- Join Date -->
 
       <ng-container matColumnDef="joinDate">
-        <th mat-header-cell *matHeaderCellDef>Join Date</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'Join Date' | translate }}</th>
 
         <td mat-cell *matCellDef="let employee">
           {{ employee.joinDate | date: 'dd MMM yyyy' }}
@@ -131,7 +131,7 @@
       <!-- Actions -->
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'Actions' | translate }}</th>
 
         <td mat-cell *matCellDef="let employee">
           <button mat-icon-button (click)="viewEmployee(employee.id)">
@@ -154,9 +154,9 @@
     <div class="empty-state" *ngIf="filteredEmployees.length === 0">
       <mat-icon>search_off</mat-icon>
 
-      <h3>No employees found</h3>
+      <h3>{{ 'No employees found' | translate }}</h3>
 
-      <p>Try changing your search or filters.</p>
+      <p>{{ 'Try changing your search or filters.' | translate }}</p>
     </div>
   </div>
 </div>

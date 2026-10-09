@@ -2,13 +2,13 @@
   <!-- Page Header -->
   <div class="page-header">
     <div>
-      <h1>Departments</h1>
-      <p>Manage your organization's departments and teams.</p>
+      <h1>{{ 'Departments' | translate }}</h1>
+      <p>{{ "Manage your organization's departments and teams." | translate }}</p>
     </div>
 
     <button mat-flat-button class="primary-button" (click)="openAddForm()">
       <span class="material-symbols-outlined">add</span>
-      Add Department
+      {{ 'Add Department' | translate }}
     </button>
   </div>
 
@@ -20,7 +20,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> Total Departments </span>
+        <span class="summary-label">{{ 'Total Departments' | translate }}</span>
 
         <strong>
           {{ totalDepartments() }}
@@ -34,7 +34,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> Active Departments </span>
+        <span class="summary-label">{{ 'Active Departments' | translate }}</span>
 
         <strong>
           {{ activeDepartments() }}
@@ -48,7 +48,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> Total Employees </span>
+        <span class="summary-label">{{ 'Total Employees' | translate }}</span>
 
         <strong>
           {{ totalEmployees() }}
@@ -66,7 +66,7 @@
 
         <input
           type="text"
-          placeholder="Search departments..."
+          [placeholder]="'Search departments...' | translate"
           [ngModel]="searchTerm()"
           (ngModelChange)="searchTerm.set($event)"
         />
@@ -82,9 +82,9 @@
         <span class="material-symbols-outlined"> filter_list </span>
 
         <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
-          <option value="All">All Status</option>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
+          <option value="All">{{ 'All Status' | translate }}</option>
+          <option value="Active">{{ 'Active' | translate }}</option>
+          <option value="Inactive">{{ 'Inactive' | translate }}</option>
         </select>
       </div>
     </div>
@@ -94,11 +94,11 @@
       <table>
         <thead>
           <tr>
-            <th>Department</th>
-            <th>Manager</th>
-            <th>Employees</th>
-            <th>Status</th>
-            <th class="actions-column">Actions</th>
+            <th>{{ 'Department' | translate }}</th>
+            <th>{{ 'Manager' | translate }}</th>
+            <th>{{ 'Employees' | translate }}</th>
+            <th>{{ 'Status' | translate }}</th>
+            <th class="actions-column">{{ 'Actions' | translate }}</th>
           </tr>
         </thead>
 
@@ -114,11 +114,11 @@
 
                   <div>
                     <strong>
-                      {{ department.name }}
+                      {{ department.name | translate }}
                     </strong>
 
                     <span>
-                      {{ department.description }}
+                      {{ department.description | translate }}
                     </span>
                   </div>
                 </div>
@@ -153,20 +153,24 @@
                 >
                   <span class="status-dot"></span>
 
-                  {{ department.status }}
+                  {{ department.status | translate }}
                 </span>
               </td>
 
               <!-- Actions -->
               <td>
                 <div class="actions">
-                  <button class="icon-button" title="Edit" (click)="openEditForm(department)">
+                  <button
+                    class="icon-button"
+                    [title]="'Edit' | translate"
+                    (click)="openEditForm(department)"
+                  >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
 
                   <button
                     class="icon-button delete"
-                    title="Delete"
+                    [title]="'Delete' | translate"
                     (click)="deleteDepartment(department)"
                   >
                     <span class="material-symbols-outlined"> delete </span>
@@ -183,11 +187,13 @@
                 <div class="empty-state">
                   <span class="material-symbols-outlined"> search_off </span>
 
-                  <h3>No departments found</h3>
+                  <h3>{{ 'No departments found' | translate }}</h3>
 
-                  <p>Try changing your search or filter.</p>
+                  <p>{{ 'Try changing your search or filter.' | translate }}</p>
 
-                  <button class="secondary-button" (click)="clearSearch()">Clear Filters</button>
+                  <button class="secondary-button" (click)="clearSearch()">
+                    {{ 'Clear Filters' | translate }}
+                  </button>
                 </div>
               </td>
             </tr>
@@ -204,12 +210,16 @@
         <div class="modal-header">
           <div>
             <h2>
-              {{ editingDepartment() ? 'Edit Department' : 'Add Department' }}
+              {{
+                (editingDepartment() ? 'Edit Department' : 'Add Department') | translate
+              }}
             </h2>
 
             <p>
               {{
-                editingDepartment() ? 'Update department information.' : 'Create a new department.'
+                (editingDepartment()
+                  ? 'Update department information.'
+                  : 'Create a new department.') | translate
               }}
             </p>
           </div>
@@ -223,7 +233,7 @@
           <!-- Department Name -->
           <div class="form-group">
             <label>
-              Department Name
+              {{ 'Department Name' | translate }}
               <span>*</span>
             </label>
 
@@ -236,33 +246,43 @@
 
           <!-- Description -->
           <div class="form-group">
-            <label> Description </label>
+            <label>{{ 'Description' | translate }}</label>
 
-            <textarea rows="3" placeholder="Describe the department..." [(ngModel)]="description">
+            <textarea
+              rows="3"
+              [placeholder]="'Describe the department...' | translate"
+              [(ngModel)]="description"
+            >
             </textarea>
           </div>
 
           <!-- Manager -->
           <div class="form-group">
-            <label> Department Manager </label>
+            <label>{{ 'Department Manager' | translate }}</label>
 
-            <input type="text" placeholder="Enter manager name" [(ngModel)]="manager" />
+            <input
+              type="text"
+              [placeholder]="'Enter manager name' | translate"
+              [(ngModel)]="manager"
+            />
           </div>
 
           <!-- Status -->
           <div class="form-group">
-            <label> Status </label>
+            <label>{{ 'Status' | translate }}</label>
 
             <select [(ngModel)]="status">
-              <option value="Active">Active</option>
+              <option value="Active">{{ 'Active' | translate }}</option>
 
-              <option value="Inactive">Inactive</option>
+              <option value="Inactive">{{ 'Inactive' | translate }}</option>
             </select>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button class="secondary-button" (click)="closeForm()">Cancel</button>
+          <button class="secondary-button" (click)="closeForm()">
+            {{ 'Cancel' | translate }}
+          </button>
 
           <button
             mat-flat-button
@@ -270,7 +290,7 @@
             [disabled]="!departmentName.trim()"
             (click)="saveDepartment()"
           >
-            {{ editingDepartment() ? 'Save Changes' : 'Add Department' }}
+            {{ (editingDepartment() ? 'Save Changes' : 'Add Department') | translate }}
           </button>
         </div>
       </div>

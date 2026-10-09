@@ -1,12 +1,12 @@
 <div class="attendance-page">
   <div class="page-header">
     <div>
-      <h1>Attendance</h1>
-      <p>Track employee attendance and daily working hours.</p>
+      <h1>{{ 'Attendance' | translate }}</h1>
+      <p>{{ 'Track employee attendance and daily working hours.' | translate }}</p>
     </div>
     <button mat-flat-button class="primary-button" (click)="openAddForm()">
       <span class="material-symbols-outlined">add</span>
-      Add Attendance
+      {{ 'Add Attendance' | translate }}
     </button>
   </div>
   <div class="summary-grid">
@@ -16,7 +16,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> Total Records </span>
+        <span class="summary-label">{{ 'Total Records' | translate }}</span>
 
         <strong>
           {{ totalRecords() }}
@@ -30,7 +30,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> Present Today </span>
+        <span class="summary-label">{{ 'Present Today' | translate }}</span>
 
         <strong>
           {{ presentToday() }}
@@ -44,7 +44,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> Absent Today </span>
+        <span class="summary-label">{{ 'Absent Today' | translate }}</span>
 
         <strong>
           {{ absentToday() }}
@@ -58,7 +58,7 @@
       </div>
 
       <div>
-        <span class="summary-label"> On Leave </span>
+        <span class="summary-label">{{ 'On Leave' | translate }}</span>
 
         <strong>
           {{ leaveCount() }}
@@ -73,7 +73,7 @@
 
         <input
           type="text"
-          placeholder="Search attendance records..."
+          [placeholder]="'Search attendance records...' | translate"
           [ngModel]="searchTerm()"
           (ngModelChange)="searchTerm.set($event)"
         />
@@ -101,10 +101,10 @@
           [ngModel]="statusFilter()"
           (ngModelChange)="statusFilter.set($event)"
         >
-          <option value="">All Status</option>
-          <option value="Present">Present</option>
-          <option value="Absent">Absent</option>
-          <option value="On Leave">On Leave</option>
+          <option value="">{{ 'All Status' | translate }}</option>
+          <option value="Present">{{ 'Present' | translate }}</option>
+          <option value="Absent">{{ 'Absent' | translate }}</option>
+          <option value="On Leave">{{ 'On Leave' | translate }}</option>
         </select>
       </div>
     </div>
@@ -113,13 +113,13 @@
     <table>
       <thead>
         <tr>
-          <th>Employee</th>
-          <th>Department</th>
-          <th>Date</th>
-          <th>Check In</th>
-          <th>Check Out</th>
-          <th>Status</th>
-          <th class="actions-column">Actions</th>
+          <th>{{ 'Employee' | translate }}</th>
+          <th>{{ 'Department' | translate }}</th>
+          <th>{{ 'Date' | translate }}</th>
+          <th>{{ 'Check In' | translate }}</th>
+          <th>{{ 'Check Out' | translate }}</th>
+          <th>{{ 'Status' | translate }}</th>
+          <th class="actions-column">{{ 'Actions' | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -145,7 +145,7 @@
 
             <!-- Department -->
             <td>
-              {{ record.department }}
+              {{ record.department | translate }}
             </td>
 
             <!-- Date -->
@@ -185,20 +185,24 @@
               >
                 <span class="status-dot"></span>
 
-                {{ record.status }}
+                {{ record.status | translate }}
               </span>
             </td>
 
             <!-- Actions -->
             <td>
               <div class="actions">
-                <button class="icon-button" title="Edit" (click)="openEditForm(record)">
+                <button
+                  class="icon-button"
+                  [title]="'Edit' | translate"
+                  (click)="openEditForm(record)"
+                >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
 
                 <button
                   class="icon-button delete"
-                  title="Delete"
+                  [title]="'Delete' | translate"
                   (click)="deleteAttendance(record)"
                 >
                   <span class="material-symbols-outlined"> delete </span>
@@ -214,11 +218,13 @@
               <div class="empty-state">
                 <span class="material-symbols-outlined"> event_busy </span>
 
-                <h3>No attendance records found</h3>
+                <h3>{{ 'No attendance records found' | translate }}</h3>
 
-                <p>Try changing your search or filters.</p>
+                <p>{{ 'Try changing your search or filters.' | translate }}</p>
 
-                <button class="secondary-button" (click)="clearFilters()">Clear Filters</button>
+                <button class="secondary-button" (click)="clearFilters()">
+                  {{ 'Clear Filters' | translate }}
+                </button>
               </div>
             </td>
           </tr>
@@ -233,14 +239,14 @@
         <div class="modal-header">
           <div>
             <h2>
-              {{ editingRecord() ? 'Edit Attendance' : 'Add Attendance' }}
+              {{ (editingRecord() ? 'Edit Attendance' : 'Add Attendance') | translate }}
             </h2>
 
             <p>
               {{
-                editingRecord()
+                (editingRecord()
                   ? 'Update attendance information.'
-                  : 'Add a daily attendance record.'
+                  : 'Add a daily attendance record.') | translate
               }}
             </p>
           </div>
@@ -253,40 +259,40 @@
         <div class="form-body">
           <div class="form-row">
             <div class="form-group">
-              <label> Employee Name <span>*</span> </label>
+              <label> {{ 'Employee Name' | translate }} <span>*</span> </label>
 
               <input type="text" placeholder="e.g. Ahmed Khan" [(ngModel)]="employeeName" />
             </div>
 
             <div class="form-group">
-              <label> Employee ID <span>*</span> </label>
+              <label> {{ 'Employee ID' | translate }} <span>*</span> </label>
 
               <input type="text" placeholder="e.g. EMP001" [(ngModel)]="employeeId" />
             </div>
           </div>
 
           <div class="form-group">
-            <label> Department </label>
+            <label>{{ 'Department' | translate }}</label>
 
             <input type="text" placeholder="e.g. Information Technology" [(ngModel)]="department" />
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label> Date <span>*</span> </label>
+              <label> {{ 'Date' | translate }} <span>*</span> </label>
 
               <input type="date" [(ngModel)]="date" />
             </div>
 
             <div class="form-group">
-              <label> Status </label>
+              <label>{{ 'Status' | translate }}</label>
 
               <select [(ngModel)]="status">
-                <option value="Present">Present</option>
+                <option value="Present">{{ 'Present' | translate }}</option>
 
-                <option value="Absent">Absent</option>
+                <option value="Absent">{{ 'Absent' | translate }}</option>
 
-                <option value="Leave">Leave</option>
+                <option value="Leave">{{ 'Leave' | translate }}</option>
               </select>
             </div>
           </div>
@@ -294,13 +300,13 @@
           @if (status === 'Present') {
             <div class="form-row">
               <div class="form-group">
-                <label> Check In </label>
+                <label>{{ 'Check In' | translate }}</label>
 
                 <input type="time" [(ngModel)]="checkIn" />
               </div>
 
               <div class="form-group">
-                <label> Check Out </label>
+                <label>{{ 'Check Out' | translate }}</label>
 
                 <input type="time" [(ngModel)]="checkOut" />
               </div>
@@ -309,14 +315,16 @@
         </div>
 
         <div class="modal-footer">
-          <button class="secondary-button" (click)="closeForm()">Cancel</button>
+          <button class="secondary-button" (click)="closeForm()">
+            {{ 'Cancel' | translate }}
+          </button>
 
           <button
             class="primary-button"
             [disabled]="!employeeName.trim() || !employeeId.trim() || !date"
             (click)="saveAttendance()"
           >
-            {{ editingRecord() ? 'Save Changes' : 'Add Attendance' }}
+            {{ (editingRecord() ? 'Save Changes' : 'Add Attendance') | translate }}
           </button>
         </div>
       </div>

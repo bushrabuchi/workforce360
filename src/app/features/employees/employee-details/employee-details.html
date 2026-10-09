@@ -7,9 +7,9 @@
     </button>
 
     <div class="title-area">
-      <h1>Employee Details</h1>
+      <h1>{{ 'Employee Details' | translate }}</h1>
 
-      <p>View employee information</p>
+      <p>{{ 'View employee information' | translate }}</p>
     </div>
   </div>
 
@@ -35,25 +35,25 @@
           [class.leave]="loadedEmployee.status === 'On Leave'"
           [class.inactive]="loadedEmployee.status === 'Inactive'"
         >
-          {{ loadedEmployee.status }}
+          {{ loadedEmployee.status | translate }}
         </span>
       </div>
 
       <button mat-flat-button class="edit-button" (click)="editEmployee()">
         <mat-icon>edit</mat-icon>
 
-        Edit Employee
+        {{ 'Edit Employee' | translate }}
       </button>
     </div>
 
     <!-- Information -->
 
     <div class="information-section">
-      <h3>Personal Information</h3>
+      <h3>{{ 'Personal Information' | translate }}</h3>
 
       <div class="info-grid">
         <div class="info-item">
-          <span class="label"> Full Name </span>
+          <span class="label">{{ 'Full Name' | translate }}</span>
 
           <strong>
             {{ loadedEmployee.name }}
@@ -61,7 +61,7 @@
         </div>
 
         <div class="info-item">
-          <span class="label"> Email </span>
+          <span class="label">{{ 'Email' | translate }}</span>
 
           <strong>
             {{ loadedEmployee.email }}
@@ -69,15 +69,15 @@
         </div>
 
         <div class="info-item">
-          <span class="label"> Department </span>
+          <span class="label">{{ 'Department' | translate }}</span>
 
           <strong>
-            {{ loadedEmployee.department }}
+            {{ loadedEmployee.department | translate }}
           </strong>
         </div>
 
         <div class="info-item">
-          <span class="label"> Position </span>
+          <span class="label">{{ 'Position' | translate }}</span>
 
           <strong>
             {{ loadedEmployee.position }}
@@ -85,7 +85,7 @@
         </div>
 
         <div class="info-item">
-          <span class="label"> Join Date </span>
+          <span class="label">{{ 'Join Date' | translate }}</span>
 
           <strong>
             {{ loadedEmployee.joinDate | date: 'dd MMM yyyy' }}
@@ -103,14 +103,14 @@
     <!-- Quick Stats -->
 
     <div class="information-section">
-      <h3>Employee Overview</h3>
+      <h3>{{ 'Employee Overview' | translate }}</h3>
 
       <div class="stats-grid">
         <div class="stat-card">
           <mat-icon>calendar_month</mat-icon>
 
           <div>
-            <span>Joined</span>
+            <span>{{ 'Joined' | translate }}</span>
 
             <strong>
               {{ loadedEmployee.joinDate | date: 'MMM yyyy' }}
@@ -122,10 +122,10 @@
           <mat-icon>business</mat-icon>
 
           <div>
-            <span>Department</span>
+            <span>{{ 'Department' | translate }}</span>
 
             <strong>
-              {{ loadedEmployee.department }}
+              {{ loadedEmployee.department | translate }}
             </strong>
           </div>
         </div>
@@ -134,7 +134,7 @@
           <mat-icon>badge</mat-icon>
 
           <div>
-            <span>Position</span>
+            <span>{{ 'Position' | translate }}</span>
 
             <strong>
               {{ loadedEmployee.position }}
@@ -145,7 +145,7 @@
     </div>
   </div>
   } @else if (loading) {
-    <div class="loading-state">Loading employee...</div>
+    <div class="loading-state">{{ 'Loading employee...' | translate }}</div>
   } @else if (errorMessage) {
     <div class="error-state">{{ errorMessage }}</div>
   }

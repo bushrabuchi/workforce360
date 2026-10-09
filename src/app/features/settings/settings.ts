@@ -1,15 +1,19 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LanguageService } from '../../services/language.service';
+import { TranslatePipe } from '../../shared/translate.pipe';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
 })
 export class SettingsComponent implements OnInit {
+  constructor(private languageService: LanguageService) {}
+
   activeSection = signal('profile');
   savedMessage = signal(false);
 
@@ -57,6 +61,7 @@ export class SettingsComponent implements OnInit {
   twoFactorEnabled = false;
 
   ngOnInit(): void {
+    this.language = this.languageService.isArabic() ? 'Arabic' : 'English';
     this.loadSettings();
   }
 
@@ -67,6 +72,11 @@ export class SettingsComponent implements OnInit {
   setSection(section: string): void {
     this.activeSection.set(section);
     this.savedMessage.set(false);
+  }
+
+  changeLanguage(language: string): void {
+    this.languageService.setLanguage(language === 'Arabic' ? 'ar' : 'en');
+    this.language = language;
   }
 
   // =========================
@@ -120,7 +130,7 @@ export class SettingsComponent implements OnInit {
         };
       }
 
-      this.language = settings.language ?? this.language;
+      this.language = this.languageService.isArabic() ? 'Arabic' : 'English';
       this.timezone = settings.timezone ?? this.timezone;
       this.dateFormat = settings.dateFormat ?? this.dateFormat;
 

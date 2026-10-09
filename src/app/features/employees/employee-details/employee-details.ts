@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Employee } from '../../../models/employee.model';
 import { EmployeeService } from '../../../services/employee.service';
+import { TranslatePipe } from '../../../shared/translate.pipe';
 
 @Component({
   selector: 'app-employee-details',
@@ -19,6 +20,7 @@ import { EmployeeService } from '../../../services/employee.service';
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './employee-details.html',
   styleUrl: './employee-details.scss',

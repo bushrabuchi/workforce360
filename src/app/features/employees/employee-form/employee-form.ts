@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EmployeeService } from '../../../services/employee.service';
+import { TranslatePipe } from '../../../shared/translate.pipe';
 
 @Component({
   selector: 'app-employee-form',
@@ -21,6 +22,7 @@ import { EmployeeService } from '../../../services/employee.service';
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.scss',

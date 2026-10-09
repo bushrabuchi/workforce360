@@ -2,8 +2,8 @@
   <!-- PAGE HEADER -->
   <div class="page-header">
     <div>
-      <h1>Settings</h1>
-      <p>Manage your account, preferences and application settings.</p>
+      <h1>{{ 'Settings' | translate }}</h1>
+      <p>{{ 'Manage your account, preferences and application settings.' | translate }}</p>
     </div>
 
     <div class="header-user">
@@ -13,7 +13,7 @@
 
       <div>
         <strong>{{ user.name }}</strong>
-        <span>{{ user.role }}</span>
+        <span>{{ user.role | translate }}</span>
       </div>
     </div>
   </div>
@@ -27,13 +27,13 @@
       <button [class.active]="activeSection() === 'profile'" (click)="setSection('profile')">
         <span class="material-symbols-outlined"> person </span>
 
-        <span>Profile</span>
+        <span>{{ 'Profile' | translate }}</span>
       </button>
 
       <button [class.active]="activeSection() === 'general'" (click)="setSection('general')">
         <span class="material-symbols-outlined"> tune </span>
 
-        <span>General</span>
+        <span>{{ 'General' | translate }}</span>
       </button>
 
       <button
@@ -42,25 +42,25 @@
       >
         <span class="material-symbols-outlined"> notifications </span>
 
-        <span>Notifications</span>
+        <span>{{ 'Notifications' | translate }}</span>
       </button>
 
       <button [class.active]="activeSection() === 'appearance'" (click)="setSection('appearance')">
         <span class="material-symbols-outlined"> palette </span>
 
-        <span>Appearance</span>
+        <span>{{ 'Appearance' | translate }}</span>
       </button>
 
       <button [class.active]="activeSection() === 'security'" (click)="setSection('security')">
         <span class="material-symbols-outlined"> security </span>
 
-        <span>Security</span>
+        <span>{{ 'Security' | translate }}</span>
       </button>
 
       <button [class.active]="activeSection() === 'account'" (click)="setSection('account')">
         <span class="material-symbols-outlined"> manage_accounts </span>
 
-        <span>Account</span>
+        <span>{{ 'Account' | translate }}</span>
       </button>
     </aside>
 
@@ -73,9 +73,9 @@
         <section class="settings-card">
           <div class="section-title">
             <div>
-              <h2>Profile Information</h2>
+              <h2>{{ 'Profile Information' | translate }}</h2>
 
-              <p>Manage your personal and professional information.</p>
+              <p>{{ 'Manage your personal and professional information.' | translate }}</p>
             </div>
 
             <span class="material-symbols-outlined section-icon"> person </span>
@@ -89,35 +89,35 @@
             <div>
               <h3>{{ user.name }}</h3>
 
-              <p>{{ user.jobTitle }}</p>
+              <p>{{ user.jobTitle | translate }}</p>
 
               <span class="status-badge">
-                {{ user.status }}
+                {{ user.status | translate }}
               </span>
             </div>
           </div>
 
           <div class="form-grid">
             <div class="form-group">
-              <label>Full Name</label>
+              <label>{{ 'Full Name' | translate }}</label>
 
               <input type="text" [(ngModel)]="user.name" />
             </div>
 
             <div class="form-group">
-              <label>Job Title</label>
+              <label>{{ 'Job Title' | translate }}</label>
 
               <input type="text" [(ngModel)]="user.jobTitle" />
             </div>
 
             <div class="form-group">
-              <label>Email Address</label>
+              <label>{{ 'Email Address' | translate }}</label>
 
               <input type="email" [(ngModel)]="user.email" />
             </div>
 
             <div class="form-group">
-              <label>Phone Number</label>
+              <label>{{ 'Phone Number' | translate }}</label>
 
               <input type="text" [(ngModel)]="user.phone" />
             </div>
@@ -127,7 +127,7 @@
             <button class="primary-btn" (click)="saveSettings()">
               <span class="material-symbols-outlined"> save </span>
 
-              Save Profile
+              {{ 'Save Profile' | translate }}
             </button>
           </div>
         </section>
@@ -139,9 +139,9 @@
         <section class="settings-card">
           <div class="section-title">
             <div>
-              <h2>General Settings</h2>
+              <h2>{{ 'General Settings' | translate }}</h2>
 
-              <p>Configure your language, timezone and date preferences.</p>
+              <p>{{ 'Configure your language, timezone and date preferences.' | translate }}</p>
             </div>
 
             <span class="material-symbols-outlined section-icon"> tune </span>
@@ -149,17 +149,17 @@
 
           <div class="form-grid">
             <div class="form-group">
-              <label>Language</label>
+              <label>{{ 'Language' | translate }}</label>
 
-              <select [(ngModel)]="language">
-                <option value="English">English</option>
+              <select [(ngModel)]="language" (ngModelChange)="changeLanguage($event)">
+                <option value="English">{{ 'English' | translate }}</option>
 
-                <option value="Arabic">Arabic</option>
+                <option value="Arabic">{{ 'Arabic' | translate }}</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label>Timezone</label>
+              <label>{{ 'Timezone' | translate }}</label>
 
               <select [(ngModel)]="timezone">
                 <option value="Asia/Riyadh">Riyadh (GMT+3)</option>
@@ -171,7 +171,7 @@
             </div>
 
             <div class="form-group">
-              <label>Date Format</label>
+              <label>{{ 'Date Format' | translate }}</label>
 
               <select [(ngModel)]="dateFormat">
                 <option value="DD MMM YYYY">08 Oct 2026</option>
@@ -187,7 +187,7 @@
             <button class="primary-btn" (click)="saveSettings()">
               <span class="material-symbols-outlined"> save </span>
 
-              Save Preferences
+              {{ 'Save Preferences' | translate }}
             </button>
           </div>
         </section>
@@ -199,9 +199,9 @@
         <section class="settings-card">
           <div class="section-title">
             <div>
-              <h2>Notifications</h2>
+              <h2>{{ 'Notifications' | translate }}</h2>
 
-              <p>Choose which notifications you want to receive.</p>
+              <p>{{ 'Choose which notifications you want to receive.' | translate }}</p>
             </div>
 
             <span class="material-symbols-outlined section-icon"> notifications </span>
@@ -210,9 +210,9 @@
           <div class="notification-list">
             <div class="notification-row">
               <div>
-                <strong>Email Notifications</strong>
+                <strong>{{ 'Email Notifications' | translate }}</strong>
 
-                <p>Receive important system updates by email.</p>
+                <p>{{ 'Receive important system updates by email.' | translate }}</p>
               </div>
 
               <label class="switch">
@@ -224,9 +224,9 @@
 
             <div class="notification-row">
               <div>
-                <strong>Attendance Notifications</strong>
+                <strong>{{ 'Attendance Notifications' | translate }}</strong>
 
-                <p>Get notified about attendance changes.</p>
+                <p>{{ 'Get notified about attendance changes.' | translate }}</p>
               </div>
 
               <label class="switch">
@@ -238,9 +238,9 @@
 
             <div class="notification-row">
               <div>
-                <strong>Employee Notifications</strong>
+                <strong>{{ 'Employee Notifications' | translate }}</strong>
 
-                <p>Receive updates about employee activity.</p>
+                <p>{{ 'Receive updates about employee activity.' | translate }}</p>
               </div>
 
               <label class="switch">
@@ -252,9 +252,9 @@
 
             <div class="notification-row">
               <div>
-                <strong>Weekly Reports</strong>
+                <strong>{{ 'Weekly Reports' | translate }}</strong>
 
-                <p>Receive a weekly HR summary report.</p>
+                <p>{{ 'Receive a weekly HR summary report.' | translate }}</p>
               </div>
 
               <label class="switch">
@@ -269,7 +269,7 @@
             <button class="primary-btn" (click)="saveSettings()">
               <span class="material-symbols-outlined"> save </span>
 
-              Save Notifications
+              {{ 'Save Notifications' | translate }}
             </button>
           </div>
         </section>
@@ -281,9 +281,9 @@
         <section class="settings-card">
           <div class="section-title">
             <div>
-              <h2>Appearance</h2>
+              <h2>{{ 'Appearance' | translate }}</h2>
 
-              <p>Customize how Workforce360 looks.</p>
+              <p>{{ 'Customize how Workforce360 looks.' | translate }}</p>
             </div>
 
             <span class="material-symbols-outlined section-icon"> palette </span>
@@ -298,11 +298,14 @@
 
             <div class="theme-info">
               <strong>
-                {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
+                {{ (darkMode ? 'Dark Mode' : 'Light Mode') | translate }}
               </strong>
 
               <p>
-                {{ darkMode ? 'Use a darker interface.' : 'Use the standard light interface.' }}
+                {{
+                  (darkMode ? 'Use a darker interface.' : 'Use the standard light interface.')
+                    | translate
+                }}
               </p>
             </div>
 
@@ -335,9 +338,9 @@
         <section class="settings-card">
           <div class="section-title">
             <div>
-              <h2>Security</h2>
+              <h2>{{ 'Security' | translate }}</h2>
 
-              <p>Manage your account security.</p>
+              <p>{{ 'Manage your account security.' | translate }}</p>
             </div>
 
             <span class="material-symbols-outlined section-icon"> security </span>
@@ -345,28 +348,30 @@
 
           <div class="security-row">
             <div>
-              <strong>Password</strong>
+              <strong>{{ 'Password' | translate }}</strong>
 
-              <p>Keep your password secure and up to date.</p>
+              <p>{{ 'Keep your password secure and up to date.' | translate }}</p>
             </div>
 
-            <button class="secondary-btn" (click)="changePassword()">Change Password</button>
+            <button class="secondary-btn" (click)="changePassword()">
+              {{ 'Change Password' | translate }}
+            </button>
           </div>
 
           <div class="security-row">
             <div>
-              <strong>Two-Factor Authentication</strong>
+              <strong>{{ 'Two-Factor Authentication' | translate }}</strong>
 
-              <p>Add an additional layer of security.</p>
+              <p>{{ 'Add an additional layer of security.' | translate }}</p>
             </div>
 
             <div class="security-control">
               <span [class.enabled]="twoFactorEnabled">
-                {{ twoFactorEnabled ? 'Enabled' : 'Disabled' }}
+                {{ (twoFactorEnabled ? 'Enabled' : 'Disabled') | translate }}
               </span>
 
               <button class="secondary-btn" (click)="toggleTwoFactor()">
-                {{ twoFactorEnabled ? 'Disable' : 'Enable' }}
+                {{ (twoFactorEnabled ? 'Disable' : 'Enable') | translate }}
               </button>
             </div>
           </div>
@@ -379,9 +384,9 @@
         <section class="settings-card">
           <div class="section-title">
             <div>
-              <h2>Account</h2>
+              <h2>{{ 'Account' | translate }}</h2>
 
-              <p>View your account and login information.</p>
+              <p>{{ 'View your account and login information.' | translate }}</p>
             </div>
 
             <span class="material-symbols-outlined section-icon"> manage_accounts </span>
@@ -389,35 +394,35 @@
 
           <div class="account-info">
             <div class="account-row">
-              <span>Account Name</span>
+              <span>{{ 'Account Name' | translate }}</span>
 
               <strong>{{ user.name }}</strong>
             </div>
 
             <div class="account-row">
-              <span>Email</span>
+              <span>{{ 'Email' | translate }}</span>
 
               <strong>{{ user.email }}</strong>
             </div>
 
             <div class="account-row">
-              <span>Role</span>
+              <span>{{ 'Role' | translate }}</span>
 
-              <strong>{{ user.role }}</strong>
+              <strong>{{ user.role | translate }}</strong>
             </div>
 
             <div class="account-row">
-              <span>Status</span>
+              <span>{{ 'Status' | translate }}</span>
 
               <span class="status-badge">
-                {{ user.status }}
+                {{ user.status | translate }}
               </span>
             </div>
 
             <div class="account-row">
-              <span>Last Login</span>
+              <span>{{ 'Last Login' | translate }}</span>
 
-              <strong>{{ user.lastLogin }}</strong>
+              <strong>              {{ user.lastLogin | translate }}</strong>
             </div>
           </div>
 
@@ -425,7 +430,7 @@
             <button class="danger-btn" (click)="signOut()">
               <span class="material-symbols-outlined"> logout </span>
 
-              Sign Out
+              {{ 'Sign Out' | translate }}
             </button>
           </div>
         </section>

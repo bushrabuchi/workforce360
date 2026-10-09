@@ -2,6 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '../../shared/translate.pipe';
 interface AttendanceRecord {
   id: number;
   employeeName: string;
@@ -16,7 +17,7 @@ interface AttendanceRecord {
 @Component({
   selector: 'app-attendance',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatButtonModule, TranslatePipe],
   templateUrl: './attendance.html',
   styleUrl: './attendance.scss',
 })

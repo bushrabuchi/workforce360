@@ -1,16 +1,20 @@
 <aside class="sidebar">
   <div class="brand">
     <a routerLink="/" class="brand-link">
-      <img src="/assets/images/logo.png" alt="WorkForce360 Logo" class="brand-image" />
+      <img
+        src="/assets/images/logo.png"
+        [alt]="'Workforce360' | translate"
+        class="brand-image"
+      />
 
       <span class="brand-text">
-        <span class="brand-name">WorkForce360</span>
-        <span class="brand-subtitle">HR Workspace</span>
+        <span class="brand-name">{{ 'Workforce360' | translate }}</span>
+        <span class="brand-subtitle">{{ 'HR Workspace' | translate }}</span>
       </span>
     </a>
   </div>
 
-  <nav class="sidebar-nav" aria-label="Main navigation">
+  <nav class="sidebar-nav" [attr.aria-label]="'Main navigation' | translate">
     <ul class="nav">
       @for (item of navItems; track item.link) {
         <li class="nav-item">
@@ -24,7 +28,7 @@
               {{ item.icon }}
             </span>
 
-            <span class="nav-label">{{ item.label }}</span>
+            <span class="nav-label">{{ item.label | translate }}</span>
           </a>
         </li>
       }
@@ -32,9 +36,16 @@
   </nav>
 
   <div class="sidebar-bottom">
-    <button class="language-button" type="button">
+    <button
+      class="language-button"
+      type="button"
+      (click)="languageService.toggleLanguage()"
+      [attr.aria-label]="
+        (languageService.isArabic() ? 'Switch to English' : 'Switch to Arabic') | translate
+      "
+    >
       <span class="material-symbols-outlined">language</span>
-      <span>English</span>
+      <span>{{ languageService.isArabic() ? 'English' : 'العربية' }}</span>
       <span class="material-symbols-outlined arrow">chevron_right</span>
     </button>
 
@@ -43,7 +54,7 @@
 
       <div class="user-details">
         <strong>Bushra</strong>
-        <span>Frontend Developer</span>
+        <span>{{ 'Frontend Developer' | translate }}</span>
       </div>
     </div>
   </div>

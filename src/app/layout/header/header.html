@@ -2,7 +2,7 @@
   <div class="search-box">
     <span class="material-symbols-outlined"> search </span>
 
-    <input type="text" placeholder="Search employees..." />
+    <input type="text" [placeholder]="'Search employees...' | translate" />
   </div>
 
   <div class="header-actions">
@@ -12,7 +12,18 @@
       <span class="notification-dot"></span>
     </button>
 
-    <button class="language">العربية</button>
+    <button
+      class="header-icon-btn language"
+      type="button"
+      (click)="toggleLanguage()"
+      [attr.aria-label]="(isArabic() ? 'Switch to English' : 'Switch to Arabic') | translate"
+      [title]="'Change language' | translate"
+    >
+      <span class="material-symbols-outlined">translate</span>
+      <span class="language-label">
+        {{ isArabic() ? 'English' : 'العربية' }}
+      </span>
+    </button>
 
     <button class="icon-button">
       <span class="material-symbols-outlined"> public </span>

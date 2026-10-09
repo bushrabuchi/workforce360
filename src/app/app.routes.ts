@@ -6,6 +6,7 @@ import { EmployeeDetailsComponent } from './features/employees/employee-details/
 import { DepartmentsComponent } from './features/departments/departments';
 import { AttendanceComponent } from './features/attendance/attendance';
 import { SettingsComponent } from './features/settings/settings';
+import { ReportsComponent } from './features/reports/reports';
 export const routes: Routes = [
   {
     path: '',
@@ -39,6 +40,10 @@ export const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
   },
   {
     path: '**',

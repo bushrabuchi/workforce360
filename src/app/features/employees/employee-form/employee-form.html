@@ -4,11 +4,14 @@
   <div class="page-header">
     <div>
       <h1>
-        {{ isEditMode ? 'Edit Employee' : 'Add Employee' }}
+        {{ (isEditMode ? 'Edit Employee' : 'Add Employee') | translate }}
       </h1>
 
       <p>
-        {{ isEditMode ? 'Update employee information' : 'Add a new employee to your organization' }}
+        {{
+          (isEditMode ? 'Update employee information' : 'Add a new employee to your organization')
+            | translate
+        }}
       </p>
     </div>
   </div>
@@ -21,9 +24,9 @@
         <mat-icon>person</mat-icon>
 
         <div>
-          <h2>Personal Information</h2>
+          <h2>{{ 'Personal Information' | translate }}</h2>
 
-          <p>Basic employee information</p>
+          <p>{{ 'Basic employee information' | translate }}</p>
         </div>
       </div>
 
@@ -31,22 +34,22 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
+          <mat-label>{{ 'First Name' | translate }}</mat-label>
 
           <input matInput formControlName="firstName" />
 
           <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">
-            First name is required
+            {{ 'First name is required' | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Last Name</mat-label>
+          <mat-label>{{ 'Last Name' | translate }}</mat-label>
 
           <input matInput formControlName="lastName" />
 
           <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">
-            Last name is required
+            {{ 'Last name is required' | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -55,15 +58,15 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
+          <mat-label>{{ 'Email' | translate }}</mat-label>
 
           <input matInput type="email" formControlName="email" />
 
-          <mat-error> Please enter a valid email </mat-error>
+          <mat-error>{{ 'Please enter a valid email' | translate }}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Phone</mat-label>
+          <mat-label>{{ 'Phone' | translate }}</mat-label>
 
           <input matInput formControlName="phone" />
         </mat-form-field>
@@ -75,9 +78,9 @@
         <mat-icon>business_center</mat-icon>
 
         <div>
-          <h2>Work Information</h2>
+          <h2>{{ 'Work Information' | translate }}</h2>
 
-          <p>Employee role and organization details</p>
+          <p>{{ 'Employee role and organization details' | translate }}</p>
         </div>
       </div>
 
@@ -85,21 +88,21 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline">
-          <mat-label>Department</mat-label>
+          <mat-label>{{ 'Department' | translate }}</mat-label>
 
           <mat-select formControlName="department">
-            <mat-option value="Engineering"> Engineering </mat-option>
+            <mat-option value="Engineering"> {{ 'Engineering' | translate }} </mat-option>
 
-            <mat-option value="Human Resources"> Human Resources </mat-option>
+            <mat-option value="Human Resources"> {{ 'Human Resources' | translate }} </mat-option>
 
-            <mat-option value="Finance"> Finance </mat-option>
+            <mat-option value="Finance"> {{ 'Finance' | translate }} </mat-option>
 
-            <mat-option value="Marketing"> Marketing </mat-option>
+            <mat-option value="Marketing"> {{ 'Marketing' | translate }} </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Position</mat-label>
+          <mat-label>{{ 'Position' | translate }}</mat-label>
 
           <input matInput formControlName="position" />
         </mat-form-field>
@@ -109,19 +112,19 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline">
-          <mat-label>Status</mat-label>
+          <mat-label>{{ 'Status' | translate }}</mat-label>
 
           <mat-select formControlName="status">
-            <mat-option value="Active"> Active </mat-option>
+            <mat-option value="Active"> {{ 'Active' | translate }} </mat-option>
 
-            <mat-option value="On Leave"> On Leave </mat-option>
+            <mat-option value="On Leave"> {{ 'On Leave' | translate }} </mat-option>
 
-            <mat-option value="Inactive"> Inactive </mat-option>
+            <mat-option value="Inactive"> {{ 'Inactive' | translate }} </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Join Date</mat-label>
+          <mat-label>{{ 'Join Date' | translate }}</mat-label>
 
           <input matInput type="date" formControlName="joinDate" />
         </mat-form-field>
@@ -130,12 +133,12 @@
       <!-- Actions -->
 
       <div class="form-actions">
-        <button mat-button type="button">Cancel</button>
+        <button mat-button type="button">{{ 'Cancel' | translate }}</button>
 
         <button mat-flat-button type="submit" class="save-button">
           <mat-icon>save</mat-icon>
 
-          {{ isEditMode ? 'Update Employee' : 'Save Employee' }}
+          {{ (isEditMode ? 'Update Employee' : 'Save Employee') | translate }}
         </button>
       </div>
     </form>

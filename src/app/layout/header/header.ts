@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { TranslatePipe } from '../../shared/translate.pipe';
 interface AppNotification {
@@ -11,7 +12,7 @@ interface AppNotification {
 }
 
 @Component({
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
@@ -49,7 +50,10 @@ export class Header implements OnInit {
       read: true,
     },
   ]);
-  constructor(private languageService: LanguageService) {
+  constructor(
+    private languageService: LanguageService,
+    private router: Router,
+  ) {
     this.isArabic = languageService.isArabic;
   }
 
@@ -63,10 +67,48 @@ export class Header implements OnInit {
       }
     }
   }
+  toggleNotifications(): void {
+    this.notificationsOpen.update((value) => !value);
+    this.profileOpen.set(false);
+  }
+
+  toggleProfile(): void {
+    this.profileOpen.update((value) => !value);
+    this.notificationsOpen.set(false);
+  }
+
+  closeProfile(): void {
+    this.profileOpen.set(false);
+  }
+
+  unreadCount(): number {
+    return this.notifications().filter((item) => !item.read).length;
+  }
+
+  markAsRead(id: number): void {
+    this.notifications.update((items) =>
+      items.map((item) => (item.id === id ? { ...item, read: true } : item)),
+    );
+
+    localStorage.setItem('workforce360_notifications', JSON.stringify(this.notifications()));
+  }
+
+  markAllAsRead(): void {
+    this.notifications.update((items) => items.map((item) => ({ ...item, read: true })));
+
+    localStorage.setItem('workforce360_notifications', JSON.stringify(this.notifications()));
+  }
 
   toggleLanguage(): void {
     this.languageService.toggleLanguage();
   }
   signOut(): void {
+    const confirmed = window.confirm('Are you sure you want to sign out?');
+
+    if (!confirmed) return;
+
+    localStorage.removeItem('workforce360_logged_in');
+    this.profileOpen.set(false);
+    void this.router.navigate(['/login']);
   }
 }

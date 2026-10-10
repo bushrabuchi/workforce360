@@ -7,7 +7,12 @@ import { DepartmentsComponent } from './features/departments/departments';
 import { AttendanceComponent } from './features/attendance/attendance';
 import { SettingsComponent } from './features/settings/settings';
 import { ReportsComponent } from './features/reports/reports';
+import { LoginComponent } from './features/login/login';
 export const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: '',
     component: DashboardComponent,

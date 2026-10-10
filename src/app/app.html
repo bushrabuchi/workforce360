@@ -192,14 +192,18 @@
   }
 </style>
 
-<div class="app-shell">
-  <app-sidebar></app-sidebar>
+@if (isLoginPage()) {
+  <router-outlet></router-outlet>
+} @else {
+  <div class="app-shell">
+    <app-sidebar></app-sidebar>
 
-  <div class="main-area">
-    <app-header></app-header>
+    <div class="main-area">
+      <app-header></app-header>
 
-    <main class="page-content">
-      <router-outlet></router-outlet>
-    </main>
+      <main class="page-content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   </div>
-</div>
+}

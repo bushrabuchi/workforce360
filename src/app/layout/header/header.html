@@ -1,32 +1,112 @@
 <header class="header">
   <div class="search-box">
-    <span class="material-symbols-outlined"> search </span>
-
+    <span class="material-symbols-outlined" aria-hidden="true">search</span>
     <input type="text" [placeholder]="'Search employees...' | translate" />
   </div>
 
-  <div class="header-actions">
-    <button class="icon-button">
-      <span class="material-symbols-outlined"> notifications </span>
+  <div class="header-menu">
+    <div class="notification-menu">
+      <button
+        class="header-icon-btn"
+        type="button"
+        (click)="toggleNotifications()"
+        [attr.aria-label]="'Notifications' | translate"
+        [attr.aria-expanded]="notificationsOpen()"
+        aria-haspopup="true"
+        [title]="'Notifications' | translate"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+        <span class="notification-badge" *ngIf="unreadCount() > 0">
+          {{ unreadCount() }}
+        </span>
+      </button>
+      <section
+        class="header-dropdown notifications-dropdown"
+        *ngIf="notificationsOpen()"
+        [attr.aria-label]="'Notifications' | translate"
+      >
+        <div class="dropdown-heading">
+          <strong>{{ isArabic() ? 'الإشعارات' : 'Notifications' }}</strong>
+          <button type="button" class="text-action" (click)="markAllAsRead()">
+            {{ isArabic() ? 'قراءة الكل' : 'Mark all read' }}
+          </button>
+        </div>
+        <div
+          class="notification-item"
+          *ngFor="let item of notifications()"
+          [class.unread]="!item.read"
+          (click)="markAsRead(item.id)"
+        >
+          <span class="notification-dot"></span>
 
-      <span class="notification-dot"></span>
-    </button>
+          <div class="notification-content">
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.message }}</p>
+            <small>{{ item.time }}</small>
+          </div>
+        </div>
+
+        <p class="empty-notifications" *ngIf="notifications().length === 0">
+          {{ isArabic() ? 'لا توجد إشعارات' : 'No notifications' }}
+        </p>
+      </section>
+    </div>
 
     <button
       class="header-icon-btn language"
       type="button"
       (click)="toggleLanguage()"
       [attr.aria-label]="(isArabic() ? 'Switch to English' : 'Switch to Arabic') | translate"
+      [attr.aria-pressed]="isArabic()"
       [title]="'Change language' | translate"
     >
-      <span class="material-symbols-outlined">translate</span>
+      <span class="material-symbols-outlined" aria-hidden="true">translate</span>
       <span class="language-label">
         {{ isArabic() ? 'English' : 'العربية' }}
       </span>
     </button>
 
-    <button class="icon-button">
-      <span class="material-symbols-outlined"> public </span>
-    </button>
+    <div class="profile-menu">
+      <button
+        class="profile-trigger"
+        type="button"
+        (click)="toggleProfile()"
+        [attr.aria-label]="'Profile' | translate"
+        [attr.aria-expanded]="profileOpen()"
+        aria-haspopup="true"
+        [title]="'Profile' | translate"
+      >
+        <span class="profile-avatar" aria-hidden="true">
+          {{ user.name.charAt(0).toUpperCase() }}
+        </span>
+        <span class="profile-info">
+          <strong>{{ user.name | translate }}</strong>
+          <small>{{ user.role | translate }}</small>
+        </span>
+        <span class="material-symbols-outlined profile-chevron" aria-hidden="true">
+          expand_more
+        </span>
+      </button>
+
+      <section class="header-dropdown profile-dropdown" *ngIf="profileOpen()">
+        <div class="profile-dropdown-heading">
+          <span class="profile-avatar" aria-hidden="true">
+            {{ user.name.charAt(0).toUpperCase() }}
+          </span>
+          <span class="profile-dropdown-identity">
+            <strong>{{ user.name | translate }}</strong>
+            <small>{{ user.email }}</small>
+          </span>
+        </div>
+        <a class="dropdown-action" routerLink="/settings" (click)="closeProfile()">
+          <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+          <span>{{ 'Account settings' | translate }}</span>
+        </a>
+        <button type="button" class="dropdown-action logout-action" (click)="signOut()">
+          <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+          <span>{{ 'Sign Out' | translate }}</span>
+        </button>
+      </section>
+    </div>
   </div>
 </header>

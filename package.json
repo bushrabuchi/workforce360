@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:pages": "ng build --configuration production --base-href /workforce360/",
+    "deploy": "npm run build:pages && node -e \"require('fs').copyFileSync('dist/workforce360/browser/index.html','dist/workforce360/browser/404.html')\" && angular-cli-ghpages --dir=dist/workforce360/browser"
   },
   "private": true,
   "packageManager": "npm@12.2.0",
@@ -26,6 +28,8 @@
     "@angular/build": "^22.2.0",
     "@angular/cli": "^22.2.0",
     "@angular/compiler-cli": "^22.2.0",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.5",
     "angular-cli-ghpages": "^3.1.0",
     "jsdom": "^30.0.0",
     "prettier": "^3.8.1",

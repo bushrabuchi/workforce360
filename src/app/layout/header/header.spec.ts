@@ -13,6 +13,9 @@ describe('Header', () => {
 
   beforeEach(async () => {
     localStorage.removeItem('workforce360_language');
+    localStorage.removeItem('workforce360_theme');
+    localStorage.removeItem('workforce360_settings');
+    document.body.classList.remove('dark-theme');
 
     await TestBed.configureTestingModule({
       imports: [Header],
@@ -51,6 +54,28 @@ describe('Header', () => {
 
     expect(localStorage.getItem('workforce360_logged_in')).toBeNull();
     expect(navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('keeps the theme getter stable and toggles the global theme once per click', () => {
+    fixture.detectChanges();
+
+    expect(component.isDarkMode()).toBe(false);
+    expect(component.isDarkMode()).toBe(false);
+    expect(document.body.classList.contains('dark-theme')).toBe(false);
+
+    component.toggleDarkMode();
+    fixture.detectChanges();
+
+    expect(component.isDarkMode()).toBe(true);
+    expect(document.body.classList.contains('dark-theme')).toBe(true);
+    expect(localStorage.getItem('workforce360_theme')).toBe('dark');
+
+    component.toggleDarkMode();
+    fixture.detectChanges();
+
+    expect(component.isDarkMode()).toBe(false);
+    expect(document.body.classList.contains('dark-theme')).toBe(false);
+    expect(localStorage.getItem('workforce360_theme')).toBe('light');
   });
 
   it('switches between Arabic and English and updates document direction', () => {

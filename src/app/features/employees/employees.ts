@@ -12,6 +12,7 @@ import { Employee } from '../../models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '../../shared/translate.pipe';
+import { SAMPLE_EMPLOYEES } from './sample-employees';
 @Component({
   selector: 'app-employees',
   standalone: true,
@@ -50,15 +51,14 @@ export class EmployeesComponent implements OnInit {
 
     this.employeeService.getEmployees().subscribe({
       next: (data) => {
-        this.employees.set(data);
+        this.employees.set(data.length > 0 ? data : SAMPLE_EMPLOYEES);
         this.loading = false;
       },
 
       error: (error) => {
         console.error(error);
 
-        this.errorMessage = 'Unable to load employees. Please try again.';
-
+        this.employees.set(SAMPLE_EMPLOYEES);
         this.loading = false;
       },
     });

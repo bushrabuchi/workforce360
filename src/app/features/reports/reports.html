@@ -1,23 +1,19 @@
 <div class="reports-page">
-  <!-- ================= HEADER ================= -->
-
   <div class="page-header">
     <div>
-      <div class="breadcrumb">{{ 'Workforce360' | translate }} / {{ 'Reports' | translate }}</div>
-
       <h1>{{ 'Reports' | translate }}</h1>
 
       <p>{{ 'Analyze employee, department and attendance performance.' | translate }}</p>
     </div>
 
     <div class="header-actions">
-      <button class="secondary-btn" (click)="printReport()">
+      <button mat-flat-button class="primary-btn" (click)="printReport()">
         <span class="material-symbols-outlined"> print </span>
 
         {{ 'Print' | translate }}
       </button>
 
-      <button class="primary-btn" (click)="exportCSV()">
+      <button mat-flat-button class="primary-btn" (click)="exportCSV()">
         <span class="material-symbols-outlined"> download </span>
 
         {{ 'Export CSV' | translate }}
@@ -27,37 +23,30 @@
 
   <!-- ================= FILTERS ================= -->
 
-  <section class="filter-card">
-    <div class="filter-group">
-      <label>{{ 'Start Date' | translate }}</label>
+  <div class="filters-card">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>{{ 'Department' | translate }}</mat-label>
 
-      <input type="date" [ngModel]="startDate()" (ngModelChange)="startDate.set($event)" />
-    </div>
-
-    <div class="filter-group">
-      <label>{{ 'End Date' | translate }}</label>
-
-      <input type="date" [ngModel]="endDate()" (ngModelChange)="endDate.set($event)" />
-    </div>
-
-    <div class="filter-group">
-      <label>{{ 'Department' | translate }}</label>
-
-      <select [ngModel]="selectedDepartment()" (ngModelChange)="selectedDepartment.set($event)">
+      <mat-select [ngModel]="selectedDepartment()" (ngModelChange)="selectedDepartment.set($event)">
         @for (department of departmentNames(); track department) {
-          <option [value]="department">
+          <mat-option [value]="department">
             {{ department | translate }}
-          </option>
+          </mat-option>
         }
-      </select>
-    </div>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'Start Date' | translate }}</mat-label>
 
-    <button class="filter-btn" (click)="applyFilters()">
-      <span class="material-symbols-outlined"> filter_alt </span>
+      <input matInput type="date" [ngModel]="startDate()" (ngModelChange)="startDate.set($event)" />
+    </mat-form-field>
 
-      {{ 'Apply Filters' | translate }}
-    </button>
-  </section>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'End Date' | translate }}</mat-label>
+
+      <input matInput type="date" [ngModel]="endDate()" (ngModelChange)="endDate.set($event)" />
+    </mat-form-field>
+  </div>
 
   <!-- ================= SUMMARY ================= -->
 
@@ -146,7 +135,7 @@
   <section class="charts-grid">
     <!-- ATTENDANCE -->
 
-    <div class="report-card">
+    <div class="panel">
       <div class="card-header">
         <div>
           <h2>{{ 'Attendance Overview' | translate }}</h2>
@@ -199,7 +188,7 @@
 
     <!-- DEPARTMENTS -->
 
-    <div class="report-card">
+    <div class="panel">
       <div class="card-header">
         <div>
           <h2>{{ 'Department Statistics' | translate }}</h2>
@@ -236,162 +225,167 @@
   </section>
 
   <!-- ================= ATTENDANCE PERFORMANCE ================= -->
+  <div class="content-grid">
+    <section class="panel">
+      <div class="card-header">
+        <div>
+          <h2>{{ 'Attendance Performance' | translate }}</h2>
 
-  <section class="report-card attendance-performance">
-    <div class="card-header">
-      <div>
-        <h2>{{ 'Attendance Performance' | translate }}</h2>
+          <p>{{ 'Current attendance breakdown.' | translate }}</p>
+        </div>
 
-        <p>{{ 'Current attendance breakdown.' | translate }}</p>
+        <span class="material-symbols-outlined"> monitoring </span>
       </div>
 
-      <span class="material-symbols-outlined"> monitoring </span>
-    </div>
+      <div class="performance-grid">
+        <div class="performance-item">
+          <div class="performance-header">
+            <span>{{ 'Present' | translate }}</span>
 
-    <div class="performance-grid">
-      <div class="performance-item">
-        <div class="performance-header">
-          <span>{{ 'Present' | translate }}</span>
+            <strong>
+              {{ totalPresent() }}
+            </strong>
+          </div>
 
-          <strong>
-            {{ totalPresent() }}
-          </strong>
+          <div class="progress">
+            <div
+              class="progress-fill present-fill"
+              [style.width.%]="getAttendancePercentage(totalPresent())"
+            ></div>
+          </div>
         </div>
 
-        <div class="progress">
-          <div
-            class="progress-fill present-fill"
-            [style.width.%]="getAttendancePercentage(totalPresent())"
-          ></div>
-        </div>
-      </div>
+        <div class="performance-item">
+          <div class="performance-header">
+            <span>{{ 'Absent' | translate }}</span>
 
-      <div class="performance-item">
-        <div class="performance-header">
-          <span>{{ 'Absent' | translate }}</span>
+            <strong>
+              {{ totalAbsent() }}
+            </strong>
+          </div>
 
-          <strong>
-            {{ totalAbsent() }}
-          </strong>
-        </div>
-
-        <div class="progress">
-          <div
-            class="progress-fill absent-fill"
-            [style.width.%]="getAttendancePercentage(totalAbsent())"
-          ></div>
-        </div>
-      </div>
-
-      <div class="performance-item">
-        <div class="performance-header">
-          <span>{{ 'Leave' | translate }}</span>
-
-          <strong>
-            {{ totalLeave() }}
-          </strong>
+          <div class="progress">
+            <div
+              class="progress-fill absent-fill"
+              [style.width.%]="getAttendancePercentage(totalAbsent())"
+            ></div>
+          </div>
         </div>
 
-        <div class="progress">
-          <div
-            class="progress-fill leave-fill"
-            [style.width.%]="getAttendancePercentage(totalLeave())"
-          ></div>
+        <div class="performance-item">
+          <div class="performance-header">
+            <span>{{ 'Leave' | translate }}</span>
+
+            <strong>
+              {{ totalLeave() }}
+            </strong>
+          </div>
+
+          <div class="progress">
+            <div
+              class="progress-fill leave-fill"
+              [style.width.%]="getAttendancePercentage(totalLeave())"
+            ></div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
+    </section>
+  </div>
   <!-- ================= EMPLOYEE REPORT ================= -->
 
   <section class="report-card employee-report">
-    <div class="card-header">
-      <div>
-        <h2>{{ 'Employee Attendance Report' | translate }}</h2>
+    <div class="panel">
+      <div class="card-header">
+        <div>
+          <h2>{{ 'Employee Attendance Report' | translate }}</h2>
 
-        <p>{{ 'Individual employee attendance statistics.' | translate }}</p>
+          <p>{{ 'Individual employee attendance statistics.' | translate }}</p>
+        </div>
+
+        <span class="material-symbols-outlined"> table_chart </span>
       </div>
 
-      <span class="material-symbols-outlined"> table_chart </span>
-    </div>
-
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ 'Employee' | translate }}</th>
-            <th>{{ 'Department' | translate }}</th>
-            <th>{{ 'Present' | translate }}</th>
-            <th>{{ 'Absent' | translate }}</th>
-            <th>{{ 'Leave' | translate }}</th>
-            <th>{{ 'Attendance Rate' | translate }}</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          @for (employee of filteredEmployees(); track employee.id) {
+      <div class="table-wrapper">
+        <table>
+          <thead>
             <tr>
-              <td>
-                <div class="employee-cell">
-                  <div class="employee-avatar">
-                    {{ employee.name.charAt(0) }}
-                  </div>
-
-                  <div>
-                    <strong>
-                      {{ employee.name }}
-                    </strong>
-
-                    <span>
-                      {{ employee.employeeId }}
-                    </span>
-                  </div>
-                </div>
-              </td>
-
-              <td>
-                {{ employee.department | translate }}
-              </td>
-
-              <td>
-                <span class="number present-number">
-                  {{ employee.present }}
-                </span>
-              </td>
-
-              <td>
-                <span class="number absent-number">
-                  {{ employee.absent }}
-                </span>
-              </td>
-
-              <td>
-                <span class="number leave-number">
-                  {{ employee.leave }}
-                </span>
-              </td>
-
-              <td>
-                <div class="rate-cell">
-                  <div class="mini-progress">
-                    <div class="mini-progress-fill" [style.width.%]="employee.attendanceRate"></div>
-                  </div>
-
-                  <strong> {{ employee.attendanceRate }}% </strong>
-                </div>
-              </td>
+              <th>{{ 'Employee' | translate }}</th>
+              <th>{{ 'Department' | translate }}</th>
+              <th>{{ 'Present' | translate }}</th>
+              <th>{{ 'Absent' | translate }}</th>
+              <th>{{ 'Leave' | translate }}</th>
+              <th>{{ 'Attendance Rate' | translate }}</th>
             </tr>
-          }
+          </thead>
 
-          @if (filteredEmployees().length === 0) {
-            <tr>
-              <td colspan="6" class="empty-state">
-                {{ 'No employee records found.' | translate }}
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+          <tbody>
+            @for (employee of filteredEmployees(); track employee.id) {
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <div class="employee-avatar">
+                      {{ employee.name.charAt(0) }}
+                    </div>
+
+                    <div>
+                      <strong>
+                        {{ employee.name }}
+                      </strong>
+
+                      <span>
+                        {{ employee.employeeId }}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  {{ employee.department | translate }}
+                </td>
+
+                <td>
+                  <span class="number present-number">
+                    {{ employee.present }}
+                  </span>
+                </td>
+
+                <td>
+                  <span class="number absent-number">
+                    {{ employee.absent }}
+                  </span>
+                </td>
+
+                <td>
+                  <span class="number leave-number">
+                    {{ employee.leave }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="rate-cell">
+                    <div class="mini-progress">
+                      <div
+                        class="mini-progress-fill"
+                        [style.width.%]="employee.attendanceRate"
+                      ></div>
+                    </div>
+
+                    <strong> {{ employee.attendanceRate }}% </strong>
+                  </div>
+                </td>
+              </tr>
+            }
+
+            @if (filteredEmployees().length === 0) {
+              <tr>
+                <td colspan="6" class="empty-state">
+                  {{ 'No employee records found.' | translate }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </div>

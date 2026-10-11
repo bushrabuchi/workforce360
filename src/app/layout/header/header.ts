@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
+import { ThemeService } from '../../services/theme.service';
 import { TranslatePipe } from '../../shared/translate.pipe';
 interface AppNotification {
   id: number;
@@ -21,7 +22,6 @@ export class Header implements OnInit {
   isArabic: LanguageService['isArabic'];
   notificationsOpen = signal(false);
   profileOpen = signal(false);
-
   user = {
     name: 'Bushra',
     email: 'bushra@example.com',
@@ -52,6 +52,7 @@ export class Header implements OnInit {
   ]);
   constructor(
     private languageService: LanguageService,
+    private themeService: ThemeService,
     private router: Router,
   ) {
     this.isArabic = languageService.isArabic;
@@ -66,6 +67,13 @@ export class Header implements OnInit {
         console.warn('Could not load saved user profile.');
       }
     }
+  }
+  isDarkMode(): boolean {
+    return this.themeService.isDarkMode();
+  }
+
+  toggleDarkMode(): void {
+    this.themeService.toggleTheme();
   }
   toggleNotifications(): void {
     this.notificationsOpen.update((value) => !value);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Employee } from '../../../models/employee.model';
 import { EmployeeService } from '../../../services/employee.service';
 import { TranslatePipe } from '../../../shared/translate.pipe';
+import { SAMPLE_EMPLOYEES } from '../sample-employees';
 
 @Component({
   selector: 'app-employee-details',
@@ -26,8 +27,7 @@ import { TranslatePipe } from '../../../shared/translate.pipe';
   styleUrl: './employee-details.scss',
 })
 export class EmployeeDetailsComponent implements OnInit {
-  employee: Employee | null = null;
-
+  employee = signal<Employee | null>(null);
   loading = false;
   errorMessage = '';
 
@@ -38,9 +38,18 @@ export class EmployeeDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const routeId = this.route.snapshot.paramMap.get('id');
 
-    if (!id) {
+    if (routeId === null) {
+      this.employee.set(SAMPLE_EMPLOYEES[0] ?? null);
+      if (!this.employee()) {
+        this.errorMessage = 'Employee not found.';
+      }
+      return;
+    }
+
+    const id = Number(routeId);
+    if (!Number.isInteger(id) || id <= 0) {
       this.errorMessage = 'Invalid employee ID.';
       return;
     }
@@ -50,29 +59,39 @@ export class EmployeeDetailsComponent implements OnInit {
 
   loadEmployee(id: number): void {
     this.loading = true;
+    this.errorMessage = '';
 
     this.employeeService.getEmployee(id).subscribe({
       next: (employee) => {
-        this.employee = employee;
+        this.employee.set(employee ?? this.getFallbackEmployee(id));
+        if (!this.employee()) {
+          this.errorMessage = 'Employee not found.';
+        }
         this.loading = false;
       },
 
       error: (error) => {
         console.error(error);
-
-        this.errorMessage = 'Employee not found.';
-
+        this.employee.set(this.getFallbackEmployee(id));
+        if (!this.employee()) {
+          this.errorMessage = 'Employee not found.';
+        }
         this.loading = false;
       },
     });
   }
 
+  private getFallbackEmployee(id: number): Employee | null {
+    return SAMPLE_EMPLOYEES.find((employee) => employee.id === id) ?? null;
+  }
+
   editEmployee(): void {
-    if (!this.employee) {
+    const employee = this.employee();
+    if (!employee) {
       return;
     }
 
-    this.router.navigate(['/employees', this.employee.id, 'edit']);
+    this.router.navigate(['/employees', employee.id, 'edit']);
   }
 
   goBack(): void {

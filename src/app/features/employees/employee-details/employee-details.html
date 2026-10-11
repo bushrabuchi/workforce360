@@ -15,135 +15,135 @@
 
   <!-- Profile Card -->
 
-  @if (employee; as loadedEmployee) {
-  <div class="profile-card">
-    <div class="profile-header">
-      <img [src]="loadedEmployee.avatar" [alt]="loadedEmployee.name" class="avatar" />
+  @if (employee(); as loadedEmployee) {
+    <div class="profile-card">
+      <div class="profile-header">
+        <img [src]="loadedEmployee.avatar" [alt]="loadedEmployee.name" class="avatar" />
 
-      <div class="profile-info">
-        <h2>
-          {{ loadedEmployee.name }}
-        </h2>
-
-        <p>
-          {{ loadedEmployee.position }}
-        </p>
-
-        <span
-          class="status"
-          [class.active]="loadedEmployee.status === 'Active'"
-          [class.leave]="loadedEmployee.status === 'On Leave'"
-          [class.inactive]="loadedEmployee.status === 'Inactive'"
-        >
-          {{ loadedEmployee.status | translate }}
-        </span>
-      </div>
-
-      <button mat-flat-button class="edit-button" (click)="editEmployee()">
-        <mat-icon>edit</mat-icon>
-
-        {{ 'Edit Employee' | translate }}
-      </button>
-    </div>
-
-    <!-- Information -->
-
-    <div class="information-section">
-      <h3>{{ 'Personal Information' | translate }}</h3>
-
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="label">{{ 'Full Name' | translate }}</span>
-
-          <strong>
+        <div class="profile-info">
+          <h2>
             {{ loadedEmployee.name }}
-          </strong>
-        </div>
+          </h2>
 
-        <div class="info-item">
-          <span class="label">{{ 'Email' | translate }}</span>
-
-          <strong>
-            {{ loadedEmployee.email }}
-          </strong>
-        </div>
-
-        <div class="info-item">
-          <span class="label">{{ 'Department' | translate }}</span>
-
-          <strong>
-            {{ loadedEmployee.department | translate }}
-          </strong>
-        </div>
-
-        <div class="info-item">
-          <span class="label">{{ 'Position' | translate }}</span>
-
-          <strong>
+          <p>
             {{ loadedEmployee.position }}
-          </strong>
+          </p>
+
+          <span
+            class="status"
+            [class.active]="loadedEmployee.status === 'Active'"
+            [class.leave]="loadedEmployee.status === 'On Leave'"
+            [class.inactive]="loadedEmployee.status === 'Inactive'"
+          >
+            {{ loadedEmployee.status | translate }}
+          </span>
         </div>
 
-        <div class="info-item">
-          <span class="label">{{ 'Join Date' | translate }}</span>
+        <button mat-flat-button class="edit-button" (click)="editEmployee()">
+          <mat-icon>edit</mat-icon>
 
-          <strong>
-            {{ loadedEmployee.joinDate | date: 'dd MMM yyyy' }}
-          </strong>
-        </div>
-
-        <div class="info-item">
-          <span class="label"> Employee ID </span>
-
-          <strong> EMP-{{ loadedEmployee.id.toString().padStart(4, '0') }} </strong>
-        </div>
+          {{ 'Edit Employee' | translate }}
+        </button>
       </div>
-    </div>
 
-    <!-- Quick Stats -->
+      <!-- Information -->
 
-    <div class="information-section">
-      <h3>{{ 'Employee Overview' | translate }}</h3>
+      <div class="information-section">
+        <h3>{{ 'Personal Information' | translate }}</h3>
 
-      <div class="stats-grid">
-        <div class="stat-card">
-          <mat-icon>calendar_month</mat-icon>
-
-          <div>
-            <span>{{ 'Joined' | translate }}</span>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">{{ 'Full Name' | translate }}</span>
 
             <strong>
-              {{ loadedEmployee.joinDate | date: 'MMM yyyy' }}
+              {{ loadedEmployee.name }}
             </strong>
           </div>
-        </div>
 
-        <div class="stat-card">
-          <mat-icon>business</mat-icon>
+          <div class="info-item">
+            <span class="label">{{ 'Email' | translate }}</span>
 
-          <div>
-            <span>{{ 'Department' | translate }}</span>
+            <strong>
+              {{ loadedEmployee.email }}
+            </strong>
+          </div>
+
+          <div class="info-item">
+            <span class="label">{{ 'Department' | translate }}</span>
 
             <strong>
               {{ loadedEmployee.department | translate }}
             </strong>
           </div>
-        </div>
 
-        <div class="stat-card">
-          <mat-icon>badge</mat-icon>
-
-          <div>
-            <span>{{ 'Position' | translate }}</span>
+          <div class="info-item">
+            <span class="label">{{ 'Position' | translate }}</span>
 
             <strong>
               {{ loadedEmployee.position }}
             </strong>
           </div>
+
+          <div class="info-item">
+            <span class="label">{{ 'Join Date' | translate }}</span>
+
+            <strong>
+              {{ loadedEmployee.joinDate | date: 'dd MMM yyyy' }}
+            </strong>
+          </div>
+
+          <div class="info-item">
+            <span class="label"> Employee ID </span>
+
+            <strong> EMP-{{ loadedEmployee.id.toString().padStart(4, '0') }} </strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+
+      <div class="information-section">
+        <h3>{{ 'Employee Overview' | translate }}</h3>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <mat-icon>calendar_month</mat-icon>
+
+            <div>
+              <span>{{ 'Joined' | translate }}</span>
+
+              <strong>
+                {{ loadedEmployee.joinDate | date: 'MMM yyyy' }}
+              </strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <mat-icon>business</mat-icon>
+
+            <div>
+              <span>{{ 'Department' | translate }}</span>
+
+              <strong>
+                {{ loadedEmployee.department | translate }}
+              </strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <mat-icon>badge</mat-icon>
+
+            <div>
+              <span>{{ 'Position' | translate }}</span>
+
+              <strong>
+                {{ loadedEmployee.position }}
+              </strong>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   } @else if (loading) {
     <div class="loading-state">{{ 'Loading employee...' | translate }}</div>
   } @else if (errorMessage) {

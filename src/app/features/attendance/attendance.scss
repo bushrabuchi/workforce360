@@ -105,7 +105,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  border-bottom: 1px solid #edf0f4;
 }
 
 .toolbar-right {
@@ -133,7 +132,7 @@
 .search-box:focus-within,
 .date-box:focus-within,
 .filter-box:focus-within {
-  border-color: #2563eb;
+  border-color: wf-surface;
 }
 
 .search-box > span,
@@ -172,16 +171,19 @@
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
+  padding-top: 22px;
+  border-radius: 12px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   min-width: 900px;
+  background-color: var(--wf-surface);
 }
 
 thead {
-  background: #f8f9fb;
+  background-color: var(--wf-surface);
 }
 
 th {
@@ -202,10 +204,6 @@ td {
   font-size: 14px;
 }
 
-tbody tr:hover {
-  background: #fafbfc;
-}
-
 /* Employee */
 
 .employee-info {
@@ -216,7 +214,6 @@ tbody tr:hover {
 
 .employee-info strong {
   display: block;
-  color: #182230;
   margin-bottom: 3px;
 }
 

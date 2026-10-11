@@ -138,37 +138,6 @@
   gap: 20px;
 }
 
-.panel {
-  min-width: 0;
-  min-height: 350px;
-  padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 6px 22px rgba(26, 42, 77, 0.035);
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.panel-header h2 {
-  margin: 0;
-  color: var(--ink);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.panel-header p {
-  margin: 6px 0 0;
-  color: #8a95aa;
-  font-size: 12px;
-}
-
 .panel-header select {
   min-height: 36px;
   padding: 0 30px 0 11px;

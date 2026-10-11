@@ -21,7 +21,7 @@ html {
   --wf-accent: #6f5de7;
   --wf-canvas: #f5f7fb;
   --wf-surface: #ffffff;
-  --wf-surface-raised: #ffffff;
+  --wf-surface-raised: #f1efef;
   --wf-surface-muted: #f7f8fc;
   --wf-soft-accent: #f0edff;
   --wf-control: #ffffff;
@@ -432,4 +432,60 @@ body.dark-theme .preview-cards span {
 
 body.dark-theme .donut::after {
   background: var(--wf-surface);
+}
+
+.filters-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 18px 18px 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(26, 42, 77, 0.035);
+}
+
+.filters-card mat-form-field {
+  width: 220px;
+}
+
+.filters-card .search-field {
+  flex: 1;
+}
+.panel {
+  min-width: 0;
+  min-height: auto;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(26, 42, 77, 0.035);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.panel-header p {
+  margin: 6px 0 0;
+  color: #8a95aa;
+  font-size: 12px;
+}
+tbody tr:hover,
+tr.mat-mdc-row:hover,
+.close-modal:hover,
+.icon-button:hover {
+  background: var(--wf-surface-raised);
 }

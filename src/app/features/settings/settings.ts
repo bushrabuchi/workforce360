@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language.service';
+import { ThemeService } from '../../services/theme.service';
 import { TranslatePipe } from '../../shared/translate.pipe';
 
 @Component({
@@ -12,7 +13,10 @@ import { TranslatePipe } from '../../shared/translate.pipe';
   styleUrl: './settings.scss',
 })
 export class SettingsComponent implements OnInit {
-  constructor(private languageService: LanguageService) {}
+  constructor(
+    private languageService: LanguageService,
+    private themeService: ThemeService,
+  ) {}
 
   activeSection = signal('profile');
   savedMessage = signal(false);
@@ -52,7 +56,9 @@ export class SettingsComponent implements OnInit {
   // APPEARANCE
   // =========================
 
-  darkMode = true;
+  get darkMode(): boolean {
+    return this.themeService.isDarkMode();
+  }
 
   // =========================
   // SECURITY
@@ -143,7 +149,10 @@ export class SettingsComponent implements OnInit {
 
       this.weeklyReports = settings.weeklyReports ?? this.weeklyReports;
 
-      this.darkMode = settings.darkMode ?? this.darkMode;
+      const savedTheme = localStorage.getItem('workforce360_theme');
+      if (savedTheme !== 'dark' && savedTheme !== 'light') {
+        this.themeService.setTheme(settings.darkMode ?? this.darkMode);
+      }
 
       this.twoFactorEnabled = settings.twoFactorEnabled ?? this.twoFactorEnabled;
 
@@ -158,17 +167,13 @@ export class SettingsComponent implements OnInit {
   // =========================
 
   toggleDarkMode(): void {
-    this.darkMode = !this.darkMode;
-
+    this.themeService.toggleTheme();
     this.applyTheme();
-
     this.saveSettings();
   }
 
   applyTheme(): void {
-    document.body.classList.toggle('dark-theme', this.darkMode);
-
-    localStorage.setItem('workforce360_theme', this.darkMode ? 'dark' : 'light');
+    this.themeService.setTheme(this.darkMode);
   }
 
   // =========================

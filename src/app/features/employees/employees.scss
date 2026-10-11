@@ -10,26 +10,6 @@
   padding: 0 18px;
 }
 
-.filters-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 18px;
-  padding: 18px 18px 0;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 6px 22px rgba(26, 42, 77, 0.035);
-}
-
-.filters-card mat-form-field {
-  width: 220px;
-}
-
-.filters-card .search-field {
-  flex: 1;
-}
-
 .table-card {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -69,9 +49,9 @@ tr.mat-mdc-row {
   transition: background 150ms ease;
 }
 
-tr.mat-mdc-row:hover {
-  background: #fafbff;
-}
+// tr.mat-mdc-row:hover {
+//   background: #fafbff;
+// }
 
 .employee-info {
   display: flex;

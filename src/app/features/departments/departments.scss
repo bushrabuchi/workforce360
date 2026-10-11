@@ -152,16 +152,11 @@ table {
   border-collapse: collapse;
 }
 
-thead {
-  background: #f8f9fb;
-}
-
 th {
   padding: 14px 20px;
   text-align: left;
   font-size: 12px;
   font-weight: 600;
-  color: #667085;
   text-transform: uppercase;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -172,10 +167,6 @@ td {
   border-top: 1px solid #edf0f4;
   color: #344054;
   font-size: 14px;
-}
-
-tbody tr:hover {
-  background: #fafbfc;
 }
 
 /* Department */
@@ -397,7 +388,7 @@ tbody tr:hover {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: #344054;
+  color: wf-ink;
   margin-bottom: 7px;
 }
 

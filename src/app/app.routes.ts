@@ -1,57 +1,107 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './features/dashboard/dashboard';
-import { EmployeesComponent } from './features/employees/employees';
-import { EmployeeFormComponent } from './features/employees/employee-form/employee-form';
-import { EmployeeDetailsComponent } from './features/employees/employee-details/employee-details';
-import { DepartmentsComponent } from './features/departments/departments';
-import { AttendanceComponent } from './features/attendance/attendance';
-import { SettingsComponent } from './features/settings/settings';
-import { ReportsComponent } from './features/reports/reports';
-import { LoginComponent } from './features/login/login';
+
+import { AppLayout } from './layout/app-layout/app-layout';
+import { authGuard } from './core/auth/auth.guard';
 export const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent,
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'dashboard',
   },
   {
-    path: '',
-    component: DashboardComponent,
+    path: 'login',
+    title: 'Sign in | Workforce360',
+    loadComponent: () =>
+      import('./features/login/login').then((component) => component.LoginComponent),
   },
 
   {
-    path: 'employees',
-    component: EmployeesComponent,
+    path: '',
+    component: AppLayout,
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: 'dashboard',
+        pathMatch: 'full',
+        title: 'Dashboard | Workforce360',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard').then(
+            (component) => component.DashboardComponent,
+          ),
+      },
+
+      {
+        path: 'employees',
+        title: 'Employees | Workforce360',
+        loadComponent: () =>
+          import('./features/employees/employees').then(
+            (component) => component.EmployeesComponent,
+          ),
+      },
+
+      {
+        path: 'employees/add',
+        title: 'Add employee | Workforce360',
+        loadComponent: () =>
+          import('./features/employees/employee-form/employee-form').then(
+            (component) => component.EmployeeFormComponent,
+          ),
+      },
+
+      {
+        path: 'employees/:id/edit',
+        title: 'Edit employee | Workforce360',
+        loadComponent: () =>
+          import('./features/employees/employee-form/employee-form').then(
+            (component) => component.EmployeeFormComponent,
+          ),
+      },
+
+      {
+        path: 'employees/:id',
+        title: 'Employee details | Workforce360',
+        loadComponent: () =>
+          import('./features/employees/employee-details/employee-details').then(
+            (component) => component.EmployeeDetailsComponent,
+          ),
+      },
+
+      {
+        path: 'departments',
+        title: 'Departments | Workforce360',
+        loadComponent: () =>
+          import('./features/departments/departments').then(
+            (component) => component.DepartmentsComponent,
+          ),
+      },
+
+      {
+        path: 'attendance',
+        title: 'Attendance | Workforce360',
+        loadComponent: () =>
+          import('./features/attendance/attendance').then(
+            (component) => component.AttendanceComponent,
+          ),
+      },
+
+      {
+        path: 'reports',
+        title: 'Reports | Workforce360',
+        loadComponent: () =>
+          import('./features/reports/reports').then((component) => component.ReportsComponent),
+      },
+
+      {
+        path: 'settings',
+        title: 'Settings | Workforce360',
+        loadComponent: () =>
+          import('./features/settings/settings').then((component) => component.SettingsComponent),
+      },
+    ],
   },
-  {
-    path: 'employees/add',
-    component: EmployeeFormComponent,
-  },
-  {
-    path: 'employees/:id/edit',
-    component: EmployeeFormComponent,
-  },
-  {
-    path: 'employees/:id',
-    component: EmployeeDetailsComponent,
-  },
-  {
-    path: 'departments',
-    component: DepartmentsComponent,
-  },
-  {
-    path: 'attendance',
-    component: AttendanceComponent,
-  },
-  {
-    path: 'settings',
-    component: SettingsComponent,
-  },
-  {
-    path: 'reports',
-    component: ReportsComponent,
-  },
+
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'dashboard',
   },
 ];

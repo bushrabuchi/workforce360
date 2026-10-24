@@ -1,10 +1,12 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language.service';
 import { ThemeService } from '../../services/theme.service';
 import { TranslatePipe } from '../../shared/translate.pipe';
+import { AuthService } from '../../core/auth/auth.service';
 
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-settings',
   standalone: true,
@@ -16,8 +18,10 @@ export class SettingsComponent implements OnInit {
   constructor(
     private languageService: LanguageService,
     private themeService: ThemeService,
-  ) {}
 
+    private router: Router,
+  ) {}
+  private readonly auth = inject(AuthService);
   activeSection = signal('profile');
   savedMessage = signal(false);
 
@@ -191,15 +195,15 @@ export class SettingsComponent implements OnInit {
   // =========================
 
   signOut(): void {
-    const confirmed = confirm('Are you sure you want to sign out?');
-
-    if (!confirmed) {
+    if (!window.confirm('Are you sure you want to sign out?')) {
       return;
     }
 
-    localStorage.removeItem('workforce360_logged_in');
+    this.auth.clearSession();
 
-    alert('You have been signed out.');
+    void this.router.navigate(['/login'], {
+      replaceUrl: true,
+    });
   }
 
   // =========================

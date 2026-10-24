@@ -23,7 +23,7 @@ export class Sidebar {
     {
       label: 'Dashboard',
       icon: 'dashboard',
-      link: '/',
+      link: '/dashboard',
     },
     {
       label: 'Employees',

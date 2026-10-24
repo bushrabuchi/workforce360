@@ -1,24 +1,54 @@
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { provideRouter, Router } from '@angular/router';
+import { provideLocationMocks } from '@angular/common/testing';
 
-describe('App', () => {
+import { App } from './app';
+import { routes } from './app.routes';
+
+describe('App routing', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-    })
-      .compileComponents();
+      providers: [provideRouter(routes), provideLocationMocks()],
+    }).compileComponents();
   });
 
-  it('should create the app', () => {
+  it('shows login without the application layout, including query parameters', async () => {
     const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    const router = TestBed.inject(Router);
 
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+
+    await router.navigateByUrl('/login?returnUrl=%2Femployees');
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, workforce360');
+
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+
+    expect(element.querySelector('app-login')).not.toBeNull();
+    expect(element.querySelector('app-layout')).toBeNull();
+    expect(element.querySelector('app-header')).toBeNull();
+    expect(element.querySelector('app-sidebar')).toBeNull();
+  });
+
+  it('shows the dashboard inside the application layout', async () => {
+    const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router);
+
+    fixture.detectChanges();
+
+    await router.navigateByUrl('/');
+    await fixture.whenStable();
+
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+
+    expect(element.querySelector('app-layout')).not.toBeNull();
+    expect(element.querySelector('app-header')).not.toBeNull();
+    expect(element.querySelector('app-sidebar')).not.toBeNull();
+    expect(element.querySelector('app-dashboard')).not.toBeNull();
+    expect(element.querySelector('app-login')).toBeNull();
   });
 });

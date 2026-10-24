@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.models.user import User
+from app.routers.auth import router as auth_router
 from app.database import engine, Base
 from app.models.employee import Employee
 
@@ -26,6 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_router)
 
 app.include_router(employee_router)
 

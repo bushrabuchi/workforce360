@@ -1,9 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { ThemeService } from '../../services/theme.service';
 import { TranslatePipe } from '../../shared/translate.pipe';
+import { AuthService } from '../../core/auth/auth.service';
 interface AppNotification {
   id: number;
   title: string;
@@ -18,15 +19,11 @@ interface AppNotification {
   styleUrl: './header.scss',
   templateUrl: './header.html',
 })
-export class Header implements OnInit {
+export class Header {
+  private readonly auth = inject(AuthService);
   isArabic: LanguageService['isArabic'];
   notificationsOpen = signal(false);
   profileOpen = signal(false);
-  user = {
-    name: 'Bushra',
-    email: 'bushra@example.com',
-    role: 'Administrator',
-  };
   notifications = signal<AppNotification[]>([
     {
       id: 1,
@@ -57,16 +54,14 @@ export class Header implements OnInit {
   ) {
     this.isArabic = languageService.isArabic;
   }
+  get user() {
+    const account = this.auth.user();
 
-  ngOnInit(): void {
-    const savedUser = localStorage.getItem('workforce360_user');
-    if (savedUser) {
-      try {
-        this.user = { ...this.user, ...JSON.parse(savedUser) };
-      } catch {
-        console.warn('Could not load saved user profile.');
-      }
-    }
+    return {
+      name: account?.name ?? '',
+      email: account?.email ?? '',
+      role: 'Signed-in user',
+    };
   }
   isDarkMode(): boolean {
     return this.themeService.isDarkMode();
@@ -111,12 +106,15 @@ export class Header implements OnInit {
     this.languageService.toggleLanguage();
   }
   signOut(): void {
-    const confirmed = window.confirm('Are you sure you want to sign out?');
+    if (!window.confirm('Are you sure you want to sign out?')) {
+      return;
+    }
 
-    if (!confirmed) return;
-
-    localStorage.removeItem('workforce360_logged_in');
+    this.auth.clearSession();
     this.profileOpen.set(false);
-    void this.router.navigate(['/login']);
+
+    void this.router.navigate(['/login'], {
+      replaceUrl: true,
+    });
   }
 }

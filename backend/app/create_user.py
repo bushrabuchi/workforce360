@@ -24,11 +24,11 @@ def main() -> None:
         print("Enter a valid email address.")
         return
 
-    password = getpass("Password (at least 15 characters): ")
+    password = getpass("Password (at least 8 characters): ")
     confirmation = getpass("Confirm password: ")
 
-    if len(password) < 15:
-        print("Use at least 15 characters.")
+    if len(password) < 8:
+        print("Use at least 8 characters.")
         return
 
     if len(password) > 1024:

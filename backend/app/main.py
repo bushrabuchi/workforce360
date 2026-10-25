@@ -6,7 +6,7 @@ from app.database import engine, Base
 from app.models.employee import Employee
 
 from app.routers.employees import router as employee_router
-
+import os
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -19,9 +19,18 @@ app = FastAPI(
 )
 
 
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:4200",
+    ).split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

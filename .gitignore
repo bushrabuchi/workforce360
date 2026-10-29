@@ -1,6 +1,7 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 backend/.env
 backend/venv/
+src/app/core/api.config.ts
 __pycache__/
 *.pyc
 

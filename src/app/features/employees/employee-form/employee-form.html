@@ -19,7 +19,7 @@
   <!-- Form -->
 
   <div class="form-card">
-    <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+    <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()" [attr.aria-busy]="loading()">
       <div class="section-title">
         <mat-icon>person</mat-icon>
 
@@ -133,14 +133,24 @@
       <!-- Actions -->
 
       <div class="form-actions">
-        <button mat-button type="button">{{ 'Cancel' | translate }}</button>
+        <button mat-button type="button" [disabled]="loading()" (click)="cancel()">
+          {{ 'Cancel' | translate }}
+        </button>
 
-        <button mat-flat-button type="submit" class="save-button">
+        <button mat-flat-button type="submit" class="save-button" [disabled]="loading()">
           <mat-icon>save</mat-icon>
 
-          {{ (isEditMode ? 'Update Employee' : 'Save Employee') | translate }}
+          {{
+            (loading() ? 'Please wait...' : isEditMode ? 'Update Employee' : 'Save Employee')
+              | translate
+          }}
         </button>
       </div>
+      @if (errorMessage()) {
+        <p class="form-error" role="alert">
+          {{ errorMessage() | translate }}
+        </p>
+      }
     </form>
   </div>
 </div>

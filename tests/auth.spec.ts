@@ -245,7 +245,7 @@ test.describe('Workforce360 authentication', () => {
     });
 
     await page
-      .getByRole('button', {
+      .getByRole('menuitem', {
         name: 'Sign Out',
         exact: true,
       })
@@ -262,5 +262,57 @@ test.describe('Workforce360 authentication', () => {
     await page.goto('/dashboard');
 
     await expect(page).toHaveURL(/\/login\?returnUrl=%2Fdashboard/);
+  });
+  test('closes notifications when clicking outside', async ({ page }) => {
+    await mockSuccessfulLogin(page);
+    await signIn(page);
+
+    const trigger = page.getByRole('button', {
+      name: 'Notifications',
+      exact: true,
+    });
+
+    await trigger.click();
+
+    const menu = page.getByRole('menu');
+
+    await expect(menu).toBeVisible();
+
+    await expect(
+      page.getByRole('menuitem', {
+        name: 'Mark all read',
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    // Click the actual outside-click backdrop.
+    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 5, y: 5 } });
+
+    await expect(menu).toHaveCount(0);
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('closes profile with Escape and restores focus', async ({ page }) => {
+    await mockSuccessfulLogin(page);
+    await signIn(page);
+
+    const trigger = page.getByRole('button', {
+      name: 'Profile',
+      exact: true,
+    });
+
+    await trigger.click();
+
+    await expect(
+      page.getByRole('menuitem', {
+        name: 'Account settings',
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    await page.keyboard.press('Escape');
+
+    await expect(page.getByRole('menu')).toHaveCount(0);
+    await expect(trigger).toBeFocused();
   });
 });

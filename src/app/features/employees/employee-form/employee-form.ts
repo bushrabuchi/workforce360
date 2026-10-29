@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -31,8 +31,8 @@ export class EmployeeFormComponent implements OnInit {
   isEditMode = false;
   employeeId: number | null = null;
 
-  loading = false;
-  errorMessage = '';
+  readonly loading = signal(false);
+  readonly errorMessage = signal('');
   employeeForm: FormGroup;
 
   constructor(
@@ -65,7 +65,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   loadEmployee(id: number): void {
-    this.loading = true;
+    this.loading.set(true);
 
     this.employeeService.getEmployee(id).subscribe({
       next: (employee) => {
@@ -81,20 +81,23 @@ export class EmployeeFormComponent implements OnInit {
           joinDate: employee.joinDate,
         });
 
-        this.loading = false;
+        this.loading.set(false);
       },
 
       error: (error) => {
         console.error(error);
 
-        this.errorMessage = 'Unable to load employee.';
+        this.errorMessage.set('Unable to load employee.');
 
-        this.loading = false;
+        this.loading.set(false);
       },
     });
   }
 
   saveEmployee(): void {
+    if (this.loading()) {
+      return;
+    }
     if (this.employeeForm.invalid) {
       this.employeeForm.markAllAsTouched();
 
@@ -113,8 +116,8 @@ export class EmployeeFormComponent implements OnInit {
       avatar: '',
     };
 
-    this.loading = true;
-    this.errorMessage = '';
+    this.loading.set(true);
+    this.errorMessage.set('');
 
     if (this.isEditMode && this.employeeId) {
       this.employeeService.updateEmployee(this.employeeId, employeeData).subscribe({
@@ -125,9 +128,9 @@ export class EmployeeFormComponent implements OnInit {
         error: (error) => {
           console.error(error);
 
-          this.errorMessage = 'Unable to update employee.';
+          this.errorMessage.set('Unable to update employee.');
 
-          this.loading = false;
+          this.loading.set(false);
         },
       });
     } else {
@@ -139,9 +142,9 @@ export class EmployeeFormComponent implements OnInit {
         error: (error) => {
           console.error(error);
 
-          this.errorMessage = 'Unable to create employee.';
+          this.errorMessage.set('Unable to create employee.');
 
-          this.loading = false;
+          this.loading.set(false);
         },
       });
     }

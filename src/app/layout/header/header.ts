@@ -5,6 +5,14 @@ import { LanguageService } from '../../services/language.service';
 import { ThemeService } from '../../services/theme.service';
 import { TranslatePipe } from '../../shared/translate.pipe';
 import { AuthService } from '../../core/auth/auth.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BidiModule } from '@angular/cdk/bidi';
 interface AppNotification {
   id: number;
   title: string;
@@ -14,7 +22,19 @@ interface AppNotification {
 }
 
 @Component({
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    TranslatePipe,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatBadgeModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BidiModule,
+  ],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
@@ -22,8 +42,6 @@ interface AppNotification {
 export class Header {
   private readonly auth = inject(AuthService);
   isArabic: LanguageService['isArabic'];
-  notificationsOpen = signal(false);
-  profileOpen = signal(false);
   notifications = signal<AppNotification[]>([
     {
       id: 1,
@@ -70,19 +88,6 @@ export class Header {
   toggleDarkMode(): void {
     this.themeService.toggleTheme();
   }
-  toggleNotifications(): void {
-    this.notificationsOpen.update((value) => !value);
-    this.profileOpen.set(false);
-  }
-
-  toggleProfile(): void {
-    this.profileOpen.update((value) => !value);
-    this.notificationsOpen.set(false);
-  }
-
-  closeProfile(): void {
-    this.profileOpen.set(false);
-  }
 
   unreadCount(): number {
     return this.notifications().filter((item) => !item.read).length;
@@ -111,7 +116,6 @@ export class Header {
     }
 
     this.auth.clearSession();
-    this.profileOpen.set(false);
 
     void this.router.navigate(['/login'], {
       replaceUrl: true,

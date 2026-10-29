@@ -4,123 +4,158 @@
     <input type="text" [placeholder]="'Search employees...' | translate" />
   </div>
 
-  <div class="header-menu">
+  <div class="header-actions">
     <button
-      class="header-icon-btn"
+      mat-icon-button
       type="button"
       (click)="toggleDarkMode()"
       [attr.aria-label]="
         (isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode') | translate
       "
       [attr.aria-pressed]="isDarkMode()"
-      [title]="'Toggle dark/light mode' | translate"
     >
-      <span class="material-symbols-outlined" aria-hidden="true">
+      <mat-icon aria-hidden="true">
         {{ isDarkMode() ? 'light_mode' : 'dark_mode' }}
-      </span>
+      </mat-icon>
     </button>
+
     <div class="notification-menu">
       <button
-        class="header-icon-btn"
+        mat-icon-button
         type="button"
-        (click)="toggleNotifications()"
-        [attr.aria-label]="'Notifications' | translate"
-        [attr.aria-expanded]="notificationsOpen()"
-        aria-haspopup="true"
-        [title]="'Notifications' | translate"
-      >
-        <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
-        <span class="notification-badge" *ngIf="unreadCount() > 0">
-          {{ unreadCount() }}
-        </span>
-      </button>
-      <section
-        class="header-dropdown notifications-dropdown"
-        *ngIf="notificationsOpen()"
+        [matMenuTriggerFor]="notificationsMenu"
         [attr.aria-label]="'Notifications' | translate"
       >
-        <div class="dropdown-heading">
-          <strong>{{ isArabic() ? 'الإشعارات' : 'Notifications' }}</strong>
-          <button type="button" class="text-action" (click)="markAllAsRead()">
-            {{ isArabic() ? 'قراءة الكل' : 'Mark all read' }}
-          </button>
-        </div>
-        <div
-          class="notification-item"
-          *ngFor="let item of notifications()"
-          [class.unread]="!item.read"
-          (click)="markAsRead(item.id)"
+        <mat-icon
+          aria-hidden="true"
+          [matBadge]="unreadCount()"
+          [matBadgeHidden]="unreadCount() === 0"
+          matBadgeSize="small"
         >
-          <span class="notification-dot"></span>
+          notifications
+        </mat-icon>
+      </button>
 
-          <div class="notification-content">
-            <strong>{{ item.title }}</strong>
-            <p>{{ item.message }}</p>
-            <small>{{ item.time }}</small>
-          </div>
+      <mat-menu
+        #notificationsMenu="matMenu"
+        class="wf-notifications-menu"
+        xPosition="before"
+        [overlapTrigger]="false"
+        [hasBackdrop]="true"
+      >
+        <div class="wf-menu-heading">
+          <strong>
+            {{ isArabic() ? 'الإشعارات' : 'Notifications' }}
+          </strong>
+
+          <small>
+            {{ unreadCount() }}
+            {{ isArabic() ? 'غير مقروءة' : 'unread' }}
+          </small>
         </div>
 
-        <p class="empty-notifications" *ngIf="notifications().length === 0">
-          {{ isArabic() ? 'لا توجد إشعارات' : 'No notifications' }}
-        </p>
-      </section>
+        <mat-divider></mat-divider>
+
+        <button
+          mat-menu-item
+          type="button"
+          (click)="markAllAsRead()"
+          [disabled]="unreadCount() === 0"
+        >
+          <mat-icon aria-hidden="true">done_all</mat-icon>
+
+          <span>
+            {{ isArabic() ? 'قراءة الكل' : 'Mark all read' }}
+          </span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        @for (item of notifications(); track item.id) {
+          <button
+            mat-menu-item
+            type="button"
+            class="wf-notification-item"
+            (click)="markAsRead(item.id)"
+          >
+            <mat-icon aria-hidden="true">
+              {{ item.read ? 'drafts' : 'mark_email_unread' }}
+            </mat-icon>
+
+            <span class="wf-notification-copy">
+              <strong>{{ item.title }}</strong>
+              <span>{{ item.message }}</span>
+              <small>{{ item.time }}</small>
+            </span>
+          </button>
+        } @empty {
+          <p class="wf-menu-empty">
+            {{ isArabic() ? 'لا توجد إشعارات' : 'No notifications' }}
+          </p>
+        }
+      </mat-menu>
     </div>
 
     <button
-      class="header-icon-btn language"
+      mat-button
       type="button"
+      class="language-button"
       (click)="toggleLanguage()"
       [attr.aria-label]="(isArabic() ? 'Switch to English' : 'Switch to Arabic') | translate"
-      [attr.aria-pressed]="isArabic()"
-      [title]="'Change language' | translate"
     >
-      <span class="material-symbols-outlined" aria-hidden="true">translate</span>
+      <mat-icon aria-hidden="true">translate</mat-icon>
+
       <span class="language-label">
         {{ isArabic() ? 'English' : 'العربية' }}
       </span>
     </button>
 
-    <div class="profile-menu">
-      <button
-        class="profile-trigger"
-        type="button"
-        (click)="toggleProfile()"
-        [attr.aria-label]="'Profile' | translate"
-        [attr.aria-expanded]="profileOpen()"
-        aria-haspopup="true"
-        [title]="'Profile' | translate"
-      >
+    <!-- Profile trigger -->
+    <button
+      mat-button
+      type="button"
+      class="profile-trigger"
+      [matMenuTriggerFor]="profileMenu"
+      [attr.aria-label]="'Profile' | translate"
+    >
+      <span class="profile-trigger-content">
         <span class="profile-avatar" aria-hidden="true">
           {{ user.name.charAt(0).toUpperCase() }}
         </span>
+
         <span class="profile-info">
-          <strong>{{ user.name | translate }}</strong>
+          <strong>{{ user.name }}</strong>
           <small>{{ user.role | translate }}</small>
         </span>
-        <span class="material-symbols-outlined profile-chevron" aria-hidden="true">
-          expand_more
-        </span>
-      </button>
 
-      <section class="header-dropdown profile-dropdown" *ngIf="profileOpen()">
-        <div class="profile-dropdown-heading">
-          <span class="profile-avatar" aria-hidden="true">
-            {{ user.name.charAt(0).toUpperCase() }}
-          </span>
-          <span class="profile-dropdown-identity">
-            <strong>{{ user.name | translate }}</strong>
-            <small>{{ user.email }}</small>
-          </span>
-        </div>
-        <a class="dropdown-action" routerLink="/settings" (click)="closeProfile()">
-          <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
-          <span>{{ 'Account settings' | translate }}</span>
-        </a>
-        <button type="button" class="dropdown-action logout-action" (click)="signOut()">
-          <span class="material-symbols-outlined" aria-hidden="true">logout</span>
-          <span>{{ 'Sign Out' | translate }}</span>
-        </button>
-      </section>
-    </div>
+        <mat-icon class="profile-chevron" aria-hidden="true"> expand_more </mat-icon>
+      </span>
+    </button>
+
+    <!-- Profile menu -->
+    <mat-menu
+      #profileMenu="matMenu"
+      class="wf-profile-menu"
+      xPosition="before"
+      [overlapTrigger]="false"
+      [hasBackdrop]="true"
+    >
+      <div class="wf-menu-heading wf-profile-identity">
+        <strong>{{ user.name }}</strong>
+        <small>{{ user.email }}</small>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <a mat-menu-item routerLink="/settings">
+        <mat-icon aria-hidden="true">manage_accounts</mat-icon>
+        <span>{{ 'Account settings' | translate }}</span>
+      </a>
+
+      <button mat-menu-item type="button" class="wf-sign-out" (click)="signOut()">
+        <mat-icon aria-hidden="true">logout</mat-icon>
+        <span>{{ 'Sign Out' | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </header>

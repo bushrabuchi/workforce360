@@ -1,0 +1,1 @@
+import{_t as T,fn as gg,q as N,yt as Te}from"./chunk-BZjIrA2r.js";function w(t){t||(t=N(Te));let i=new T(e=>{if(t.destroyed){e.next();return}return t.onDestroy(e.next.bind(e))});return e=>e.pipe(gg(i))}export{w as t};

@@ -4,7 +4,7 @@ from app.models.user import User
 from app.routers.auth import router as auth_router
 from app.database import engine, Base
 from app.models.employee import Employee
-
+from app.routers.ai import router as ai_router
 from app.routers.employees import router as employee_router
 import os
 
@@ -17,7 +17,7 @@ app = FastAPI(
     description="Enterprise Workforce Management API",
     version="1.0.0"
 )
-
+app.include_router(ai_router)
 
 allowed_origins = [
     origin.strip()

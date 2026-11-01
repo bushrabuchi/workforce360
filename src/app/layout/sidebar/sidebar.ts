@@ -45,6 +45,7 @@ export class Sidebar {
       icon: 'assessment',
       link: '/reports',
     },
+    { label: 'AI Job Description', icon: 'auto_awesome', link: '/ai-job-description' },
     {
       label: 'Settings',
       icon: 'settings',

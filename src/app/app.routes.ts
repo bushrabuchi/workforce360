@@ -90,7 +90,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/reports/reports').then((component) => component.ReportsComponent),
       },
-
+      {
+        path: 'ai-job-description',
+        title: 'AI Job Description | Workforce360',
+        loadComponent: () =>
+          import('./features/ai-job-description/ai-job-description').then(
+            (component) => component.AiJobDescriptionComponent,
+          ),
+      },
       {
         path: 'settings',
         title: 'Settings | Workforce360',

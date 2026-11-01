@@ -129,7 +129,7 @@ export class LoginComponent {
 
     // Only allow known application routes as return destinations.
     const allowedRoute =
-      /^\/(dashboard|employees|departments|attendance|reports|settings)(\/|\?|#|$)/;
+      /^\/(dashboard|employees|departments|attendance|reports|settings|ai-job-description)(\/|\?|#|$)/;
 
     return returnUrl && allowedRoute.test(returnUrl) ? returnUrl : '/dashboard';
   }

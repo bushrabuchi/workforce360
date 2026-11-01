@@ -1,0 +1,101 @@
+<section class="ai-page">
+  <h1 class="page-title">AI Job Description</h1>
+
+  <p>
+    Enter the role requirements to generate a draft. Review and edit the result before using it.
+  </p>
+
+  <p class="hint">Use generic job requirements. Do not enter private employee information.</p>
+
+  <form [formGroup]="form" (ngSubmit)="generate()" [attr.aria-busy]="isLoading()" novalidate>
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Job title</mat-label>
+        <input matInput formControlName="jobTitle" maxlength="100" />
+
+        @if (form.controls.jobTitle.invalid) {
+          <mat-error>Enter a job title with 3–100 characters.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Department</mat-label>
+        <input matInput formControlName="department" maxlength="100" />
+
+        @if (form.controls.department.invalid) {
+          <mat-error>Enter a department with 2–100 characters.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Experience level</mat-label>
+        <mat-select formControlName="experienceLevel">
+          <mat-option value="Junior">Junior</mat-option>
+          <mat-option value="Mid-level">Mid-level</mat-option>
+          <mat-option value="Senior">Senior</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Draft language</mat-label>
+        <mat-select formControlName="language">
+          <mat-option value="English">English</mat-option>
+          <mat-option value="Arabic">Arabic</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Required skills</mat-label>
+        <textarea matInput formControlName="skills" rows="3"></textarea>
+
+        <mat-hint>Separate skills with commas.</mat-hint>
+
+        @if (form.controls.skills.invalid) {
+          <mat-error> Enter 1–15 skills, each no longer than 80 characters. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="error" role="alert">{{ errorMessage() }}</p>
+    }
+
+    <button mat-flat-button type="submit" [disabled]="isLoading()">
+      {{ isLoading() ? 'Generating…' : 'Generate draft' }}
+    </button>
+
+    <div class="status" role="status" aria-live="polite">
+      @if (isLoading()) {
+        <p>Generating your draft. This may take up to a minute.</p>
+      } @else if (hasDraft()) {
+        <p>Your draft is ready to review and edit.</p>
+      }
+    </div>
+
+    @if (isLoading()) {
+      <mat-progress-bar
+        mode="indeterminate"
+        aria-label="Generating job description"
+      ></mat-progress-bar>
+    }
+  </form>
+
+  @if (hasDraft()) {
+    <section class="draft-section" aria-labelledby="draft-heading">
+      <h2 id="draft-heading">Review your draft</h2>
+
+      <p>Check the wording and requirements. This draft is not saved to the database.</p>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Job description draft</mat-label>
+        <textarea
+          matInput
+          [formControl]="draftControl"
+          [readonly]="isLoading()"
+          [attr.dir]="draftLanguage() === 'Arabic' ? 'rtl' : 'ltr'"
+          rows="18"
+        ></textarea>
+      </mat-form-field>
+    </section>
+  }
+</section>
